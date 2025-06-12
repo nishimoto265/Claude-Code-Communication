@@ -1,16 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 🚀 Agent間メッセージ送信スクリプト
+
+# スクリプトの場所を基準にパスを解決する
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+
+# ログファイルをスクリプトからの相対パスで指定
+LOG_FILE="$SCRIPT_DIR/logs/send_log.txt"
+
+# ログディレクトリが存在しない場合は作成
+mkdir -p "$(dirname "$LOG_FILE")"
 
 # エージェント→tmuxターゲット マッピング
 get_agent_target() {
     case "$1" in
-        "president") echo "president" ;;
-        "boss1") echo "multiagent:0.0" ;;
-        "worker1") echo "multiagent:0.1" ;;
-        "worker2") echo "multiagent:0.2" ;;
-        "worker3") echo "multiagent:0.3" ;;
-        *) echo "" ;;
+        "president") echo "chimera:0.0" ;;
+        "worker1") echo "chimera:0.1" ;;
+        "worker2") echo "chimera:0.2" ;;
+        "worker3") echo "chimera:0.3" ;;
+        "worker4") echo "chimera:0.4" ;;
+        "worker5") echo "chimera:0.5" ;;
+        "worker6") echo "chimera:0.6" ;;
+        *) return 1 ;;
     esac
 }
 
@@ -24,15 +35,18 @@ show_usage() {
 
 利用可能エージェント:
   president - プロジェクト統括責任者
-  boss1     - チームリーダー  
   worker1   - 実行担当者A
   worker2   - 実行担当者B
   worker3   - 実行担当者C
+  worker4   - 実行担当者D
+  worker5   - 実行担当者E
+  worker6   - 実行担当者F
+  all_workers - 全ての実行担当者
 
 使用例:
   $0 president "指示書に従って"
-  $0 boss1 "Hello World プロジェクト開始指示"
   $0 worker1 "作業完了しました"
+  $0 all_workers "注意: 全ての実行担当者に通知"
 EOF
 }
 
@@ -40,11 +54,14 @@ EOF
 show_agents() {
     echo "📋 利用可能なエージェント:"
     echo "=========================="
-    echo "  president → president:0     (プロジェクト統括責任者)"
-    echo "  boss1     → multiagent:0.0  (チームリーダー)"
-    echo "  worker1   → multiagent:0.1  (実行担当者A)"
-    echo "  worker2   → multiagent:0.2  (実行担当者B)" 
-    echo "  worker3   → multiagent:0.3  (実行担当者C)"
+    echo "  president → chimera:0.0     (プロジェクト統括責任者)"
+    echo "  worker1   → chimera:0.1     (実行担当者A)"
+    echo "  worker2   → chimera:0.2     (実行担当者B)" 
+    echo "  worker3   → chimera:0.3     (実行担当者C)"
+    echo "  worker4   → chimera:0.4     (実行担当者D)"
+    echo "  worker5   → chimera:0.5     (実行担当者E)"
+    echo "  worker6   → chimera:0.6     (実行担当者F)"
+    echo "  all_workers → 全ての実行担当者"
 }
 
 # ログ記録
@@ -53,8 +70,7 @@ log_send() {
     local message="$2"
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     
-    mkdir -p logs
-    echo "[$timestamp] $agent: SENT - \"$message\"" >> logs/send_log.txt
+    echo "[$timestamp] $agent: SENT - \"$message\"" >> "$LOG_FILE"
 }
 
 # メッセージ送信
@@ -110,6 +126,20 @@ main() {
     
     local agent_name="$1"
     local message="$2"
+    
+    # all_workersへの対応
+    if [ "$agent_name" = "all_workers" ]; then
+        echo "Sending to all workers..."
+        for i in {1..6}; do
+            TARGET=$(get_agent_target "worker$i")
+            # メッセージ送信
+            send_message "$TARGET" "$message"
+            # ログ記録
+            log_send "all_workers" "$message"
+        done
+        echo "Messages sent to all workers."
+        exit 0
+    fi
     
     # エージェントターゲット取得
     local target

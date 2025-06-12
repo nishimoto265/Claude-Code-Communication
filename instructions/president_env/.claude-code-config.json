@@ -1,0 +1,11 @@
+{
+  "initializationSequence": {
+    "enabled": true,
+    "steps": [
+      {
+        "action": "readFile",
+        "path": "../president.md"
+      }
+    ]
+  }
+} 
