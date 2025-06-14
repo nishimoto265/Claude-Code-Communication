@@ -5,13 +5,46 @@
 
 set -e  # エラー時に停止
 
+# 色定義（ANSI カラーコード）
+# 参考: \033[1;XXm で明るい色、\033[0m でリセット
+COLOR_RED='\033[1;31m'      # 明るい赤（boss1用）
+COLOR_BLUE='\033[1;34m'     # 明るい青（worker用）
+COLOR_MAGENTA='\033[1;35m'  # 明るいマゼンタ（PRESIDENT用）
+COLOR_GREEN='\033[1;32m'    # 明るい緑（ディレクトリ表示用）
+COLOR_RESET='\033[0m'       # 色リセット
+
 # 色付きログ関数
 log_info() {
-    echo -e "\033[1;32m[INFO]\033[0m $1"
+    echo -e "${COLOR_GREEN}[INFO]${COLOR_RESET} $1"
 }
 
 log_success() {
-    echo -e "\033[1;34m[SUCCESS]\033[0m $1"
+    echo -e "${COLOR_BLUE}[SUCCESS]${COLOR_RESET} $1"
+}
+
+# シェル判定関数
+set_shell_prompt() {
+    local pane_id="$1"
+    local name="$2"
+    local color="$3"
+    
+    # tmuxセッション内でシェルを判定してプロンプトを設定
+    tmux send-keys -t "$pane_id" "
+if [ -n \"\$ZSH_VERSION\" ]; then
+    # zshの場合
+    export PROMPT=\"(%F{$color}$name%f) %F{46}%~%f%# \"
+elif [ -n \"\$BASH_VERSION\" ]; then
+    # bashの場合
+    case $color in
+        196) export PS1='(\\[\\033[1;31m\\]$name\\[\\033[0m\\]) \\[\\033[1;32m\\]\\w\\[\\033[0m\\]\\$ ' ;;
+        21)  export PS1='(\\[\\033[1;34m\\]$name\\[\\033[0m\\]) \\[\\033[1;32m\\]\\w\\[\\033[0m\\]\\$ ' ;;
+        201) export PS1='(\\[\\033[1;35m\\]$name\\[\\033[0m\\]) \\[\\033[1;32m\\]\\w\\[\\033[0m\\]\\$ ' ;;
+    esac
+else
+    # その他のシェルの場合
+    export PS1='($name) \\w\\$ '
+fi
+" C-m
 }
 
 echo "🤖 Multi-Agent Communication Demo 環境構築"
@@ -38,33 +71,36 @@ log_info "📺 multiagentセッション作成開始 (4ペイン)..."
 tmux new-session -d -s multiagent -n "agents"
 
 # 2x2グリッド作成（合計4ペイン）
-tmux split-window -h -t "multiagent:0"      # 水平分割（左右）
-tmux select-pane -t "multiagent:0.0"
-tmux split-window -v                        # 左側を垂直分割
-tmux select-pane -t "multiagent:0.2"
-tmux split-window -v                        # 右側を垂直分割
+tmux split-window -h -t multiagent:agents      # 水平分割（左右）
+tmux select-pane -t multiagent:agents.0
+tmux split-window -v                            # 左側を垂直分割
+tmux select-pane -t multiagent:agents.2
+tmux split-window -v                            # 右側を垂直分割
 
 # ペインタイトル設定
 log_info "ペインタイトル設定中..."
 PANE_TITLES=("boss1" "worker1" "worker2" "worker3")
 
 for i in {0..3}; do
-    tmux select-pane -t "multiagent:0.$i" -T "${PANE_TITLES[$i]}"
+    tmux select-pane -t "multiagent:agents.$i" -T "${PANE_TITLES[$i]}"
     
     # 作業ディレクトリ設定
-    tmux send-keys -t "multiagent:0.$i" "cd $(pwd)" C-m
+    tmux send-keys -t "multiagent:agents.$i" "cd $(pwd)" C-m
     
-    # カラープロンプト設定
+    # カラープロンプト設定（シェル自動判定）
     if [ $i -eq 0 ]; then
         # boss1: 赤色
-        tmux send-keys -t "multiagent:0.$i" "export PS1='(\[\033[1;31m\]${PANE_TITLES[$i]}\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
+        set_shell_prompt "multiagent:agents.$i" "${PANE_TITLES[$i]}" "196"
     else
         # workers: 青色
-        tmux send-keys -t "multiagent:0.$i" "export PS1='(\[\033[1;34m\]${PANE_TITLES[$i]}\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
+        set_shell_prompt "multiagent:agents.$i" "${PANE_TITLES[$i]}" "21"
     fi
     
     # ウェルカムメッセージ
-    tmux send-keys -t "multiagent:0.$i" "echo '=== ${PANE_TITLES[$i]} エージェント ==='" C-m
+    tmux send-keys -t "multiagent:agents.$i" "echo '=== ${PANE_TITLES[$i]} エージェント ==='" C-m
+    
+    # デバッグ用：TERM環境変数確認（問題がある場合はコメントアウトを解除）
+    # tmux send-keys -t "multiagent:agents.$i" "echo \"TERM: \$TERM\"" C-m
 done
 
 log_success "✅ multiagentセッション作成完了"
@@ -75,7 +111,8 @@ log_info "👑 presidentセッション作成開始..."
 
 tmux new-session -d -s president
 tmux send-keys -t president "cd $(pwd)" C-m
-tmux send-keys -t president "export PS1='(\[\033[1;35m\]PRESIDENT\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
+# PRESIDENTのカラープロンプト設定（マゼンタ色）
+set_shell_prompt "president" "PRESIDENT" "201"
 tmux send-keys -t president "echo '=== PRESIDENT セッション ==='" C-m
 tmux send-keys -t president "echo 'プロジェクト統括責任者'" C-m
 tmux send-keys -t president "echo '========================'" C-m
@@ -118,7 +155,7 @@ echo "  2. 🤖 Claude Code起動:"
 echo "     # 手順1: President認証"
 echo "     tmux send-keys -t president 'claude' C-m"
 echo "     # 手順2: 認証後、multiagent一括起動"
-echo "     for i in {0..3}; do tmux send-keys -t multiagent:0.\$i 'claude' C-m; done"
+echo "     for i in {0..3}; do tmux send-keys -t multiagent:agents.\$i 'claude' C-m; done"
 echo ""
 echo "  3. 📜 指示書確認:"
 echo "     PRESIDENT: instructions/president.md"
