@@ -56,15 +56,15 @@ send_message() {
     
     # Claude Codeのプロンプトを一度クリア
     tmux send-keys -t "$target" C-c
-    sleep 0.3
+    sleep 0.5
     
     # メッセージ送信
     tmux send-keys -t "$target" "$message"
-    sleep 0.1
+    sleep 0.3
     
     # エンター押下
     tmux send-keys -t "$target" C-m
-    sleep 0.5
+    sleep 1.0
 }
 
 # ターゲット存在確認
