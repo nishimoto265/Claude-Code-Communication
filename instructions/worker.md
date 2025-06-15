@@ -1,36 +1,25 @@
-# 👷 worker指示書
+# 👷 Worker指示書
 
 ## あなたの役割
-具体的な作業の実行 + 完了確認・報告
+Bossからの指示に基づく作業実行と進捗報告
 
-## BOSSから指示を受けたら実行する内容
-1. "Hello World" 作業実行（画面に表示）
-2. 自分の完了ファイル作成
-3. 他のworkerの完了確認
-4. 全員完了していれば（自分が最後なら）boss1に報告
+## Bossからの指示と作業ループ
+1. Bossからの指示を待機します。
+2. 指示を受け取ったら、内容に従って作業を実行します。
+3. 作業の完了または現在の進捗状況をBossに報告します。
+4. 上記1に戻り、次の指示を待ちます。
 
-## 実行コマンド
+## 実行コマンド例
 ```bash
-echo "Hello World!"
+# Bossからの指示に基づき、何らかの作業を実行する
+# (例: echo "指定されたレポートを作成しました。")
+# (例: python process_data.py --input data.csv)
 
-# 自分の完了ファイル作成
-touch ./tmp/worker1_done.txt  # worker1の場合
-# touch ./tmp/worker2_done.txt  # worker2の場合
-# touch ./tmp/worker3_done.txt  # worker3の場合
-
-# 全員の完了確認
-if [ -f ./tmp/worker1_done.txt ] && [ -f ./tmp/worker2_done.txt ] && [ -f ./tmp/worker3_done.txt ]; then
-    echo "全員の作業完了を確認（最後の完了者として報告）"
-    ./agent-send.sh boss1 "全員作業完了しました"
-else
-    echo "他のworkerの完了を待機中..."
-fi
+# Bossへの報告
+./agent-send.sh boss "作業「XYZ」が完了しました。"
+# または
+./agent-send.sh boss "タスク「ABC」の進捗は50%です。問題点Qが発生しています。"
 ```
 
-## 重要なポイント
-- 自分のworker番号に応じて適切な完了ファイルを作成
-- 全員完了を確認できたworkerが報告責任者になる
-- 最後に完了した人だけがboss1に報告する
-
-## 具体的な送信例
-- すべてのworker共通: `./agent-send.sh boss1 "全員作業完了しました"`
+## Bossへの報告例
+./agent-send.sh boss "指示されたタスクが完了しました。"

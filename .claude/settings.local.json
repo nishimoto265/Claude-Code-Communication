@@ -6,8 +6,6 @@
       "Bash(touch:*)",
       "Bash(echo:*)",
       "Bash(if:*)",
-      "Bash([ -f ./tmp/worker*_done.txt ]*)",
-      "Bash(*worker*_done.txt*)",
       "Bash(mkdir:*)",
       "Bash(then)",
       "Bash(else)"

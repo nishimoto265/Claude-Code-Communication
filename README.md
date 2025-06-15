@@ -4,19 +4,14 @@ Agent同士がやり取りするtmux環境のデモシステム
 
 ## 🎯 デモ概要
 
-PRESIDENT → BOSS → Workers の階層型指示システムを体感できます
+Bossがワーカーに指示を出し、ワーカーが進捗を報告するループ処理をデモします。
 
 ### 👥 エージェント構成
 
 ```
-📊 PRESIDENT セッション (1ペイン)
-└── PRESIDENT: プロジェクト統括責任者
-
-📊 multiagent セッション (4ペイン)  
-├── boss1: チームリーダー
-├── worker1: 実行担当者A
-├── worker2: 実行担当者B
-└── worker3: 実行担当者C
+📊 multiagent セッション (2ペイン)
+├── boss: リーダー
+└── worker: 実行担当者
 ```
 
 ## 🚀 クイックスタート
@@ -30,7 +25,7 @@ cd Claude-Code-Communication
 
 ### 1. tmux環境構築
 
-⚠️ **注意**: 既存の `multiagent` と `president` セッションがある場合は自動的に削除されます。
+⚠️ **注意**: 既存の `multiagent` セッションがある場合は自動的に削除されます。
 
 ```bash
 ./setup.sh
@@ -41,54 +36,45 @@ cd Claude-Code-Communication
 ```bash
 # マルチエージェント確認
 tmux attach-session -t multiagent
-
-# プレジデント確認（別ターミナルで）
-tmux attach-session -t president
+# boss と worker のペインが表示されます
 ```
 
 ### 3. Claude Code起動
 
-**手順1: President認証**
 ```bash
-# まずPRESIDENTで認証を実施
-tmux send-keys -t president 'claude' C-m
+# multiagentセッションの各ペインでClaude Codeを起動
+for i in {0..1}; do tmux send-keys -t multiagent:0.$i 'claude' C-m; done
 ```
-認証プロンプトに従って許可を与えてください。
-
-**手順2: Multiagent一括起動**
-```bash
-# 認証完了後、multiagentセッションを一括起動
-for i in {0..3}; do tmux send-keys -t multiagent:0.$i 'claude' C-m; done
-```
+各ペインで認証プロンプトに従って許可を与えてください。
 
 ### 4. デモ実行
 
-PRESIDENTセッションで直接入力：
+bossペインで、あなたはbossです。workerに最初の指示を出してください。 のように入力して開始します。
+例:
 ```
-あなたはpresidentです。指示書に従って
+あなたはbossです。指示書に従って、workerに最初の作業指示を出してください。
 ```
 
 ## 📜 指示書について
 
 各エージェントの役割別指示書：
-- **PRESIDENT**: `instructions/president.md`
-- **boss1**: `instructions/boss.md` 
-- **worker1,2,3**: `instructions/worker.md`
+- **boss**: `instructions/boss.md`
+- **worker**: `instructions/worker.md`
 
 **Claude Code参照**: `CLAUDE.md` でシステム構造を確認
 
 **要点:**
-- **PRESIDENT**: 「あなたはpresidentです。指示書に従って」→ boss1に指示送信
-- **boss1**: PRESIDENT指示受信 → workers全員に指示 → 完了報告
-- **workers**: Hello World実行 → 完了ファイル作成 → 最後の人が報告
+- **boss**: workerに作業指示を送信します。
+- **worker**: 指示に基づいて作業を実行し、結果や進捗をbossに報告します。
+- このプロセスがループします。
 
 ## 🎬 期待される動作フロー
 
 ```
-1. PRESIDENT → boss1: "あなたはboss1です。Hello World プロジェクト開始指示"
-2. boss1 → workers: "あなたはworker[1-3]です。Hello World 作業開始"  
-3. workers → ./tmp/ファイル作成 → 最後のworker → boss1: "全員作業完了しました"
-4. boss1 → PRESIDENT: "全員完了しました"
+1. Boss → Worker: (何らかの作業指示)
+2. Worker: (作業実行)
+3. Worker → Boss: (進捗/完了報告)
+4. Boss: (報告に基づき次の指示を検討、1に戻る)
 ```
 
 ## 🔧 手動操作
@@ -100,9 +86,8 @@ PRESIDENTセッションで直接入力：
 ./agent-send.sh [エージェント名] [メッセージ]
 
 # 例
-./agent-send.sh boss1 "緊急タスクです"
-./agent-send.sh worker1 "作業完了しました"
-./agent-send.sh president "最終報告です"
+./agent-send.sh boss "新しい指示です"
+./agent-send.sh worker "作業進捗を報告します"
 
 # エージェント一覧確認
 ./agent-send.sh --list
@@ -117,10 +102,7 @@ PRESIDENTセッションで直接入力：
 cat logs/send_log.txt
 
 # 特定エージェントのログ
-grep "boss1" logs/send_log.txt
-
-# 完了ファイル確認
-ls -la ./tmp/worker*_done.txt
+grep "boss" logs/send_log.txt
 ```
 
 ### セッション状態確認
@@ -131,7 +113,6 @@ tmux list-sessions
 
 # ペイン一覧
 tmux list-panes -t multiagent
-tmux list-panes -t president
 ```
 
 ## 🔄 環境リセット
@@ -139,12 +120,9 @@ tmux list-panes -t president
 ```bash
 # セッション削除
 tmux kill-session -t multiagent
-tmux kill-session -t president
-
-# 完了ファイル削除
-rm -f ./tmp/worker*_done.txt
 
 # 再構築（自動クリア付き）
+# (tmpフォルダ内のログファイルなどはクリアされません)
 ./setup.sh
 ```
 
