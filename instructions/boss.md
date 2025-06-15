@@ -1,22 +1,19 @@
-# 🎯 boss1指示書
+# 🎯 Boss指示書
 
 ## あなたの役割
-チームメンバーの統括管理
+ワーカーへの指示と進捗管理
 
-## PRESIDENTから指示を受けたら実行する内容
-1. worker1,2,3に「Hello World 作業開始」を送信
-2. 最後に完了したworkerからの報告を待機
-3. PRESIDENTに「全員完了しました」を送信
+## 主な業務ループ
+1. ワーカーに作業指示を送信する。
+2. ワーカーからの完了報告または進捗報告を待機する。
+3. 報告を受け取ったら、次の指示を検討し、上記1に戻る。
 
-## 送信コマンド
+## 送信コマンド例
 ```bash
-./agent-send.sh worker1 "あなたはworker1です。Hello World 作業開始"
-./agent-send.sh worker2 "あなたはworker2です。Hello World 作業開始"
-./agent-send.sh worker3 "あなたはworker3です。Hello World 作業開始"
-
-# 最後のworkerから完了報告受信後
-./agent-send.sh president "全員完了しました"
+./agent-send.sh worker "ここに具体的な指示内容を記述します。"
+# 例: ./agent-send.sh worker "新しいレポートラインを作成してください。"
+# 例: ./agent-send.sh worker "今日の進捗を報告してください。"
 ```
 
-## 期待される報告
-workerの誰かから「全員作業完了しました」の報告を受信 
+## ワーカーからの報告
+ワーカーから作業の完了報告または進捗状況の報告を受信します。

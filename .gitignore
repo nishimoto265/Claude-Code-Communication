@@ -6,7 +6,6 @@ logs/
 # 一時ファイル
 tmp/
 *.tmp
-*_done.txt
 
 # OS固有
 .DS_Store
