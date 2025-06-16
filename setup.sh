@@ -3,7 +3,7 @@
 # 🚀 Multi-Agent Communication Demo 環境構築
 # 参考: setup_full_environment.sh
 
-set -e  # エラー時に停止
+set -euo pipefail  # エラー時に停止、未定義変数参照でエラー、パイプラインエラーも検知
 
 # 色定義（ANSI カラーコード）
 # 参考: \033[1;XXm で明るい色、\033[0m でリセット
@@ -49,6 +49,31 @@ fi
 
 echo "🤖 Multi-Agent Communication Demo 環境構築"
 echo "==========================================="
+echo ""
+
+# 依存関係チェック
+log_info "🔍 依存関係チェック中..."
+
+# tmuxチェック
+if ! command -v tmux &> /dev/null; then
+    echo "❌ エラー: tmuxがインストールされていません"
+    echo "   macOS: brew install tmux"
+    echo "   Ubuntu: sudo apt-get install tmux"
+    exit 1
+fi
+
+# Claude CLIチェック
+if ! command -v claude &> /dev/null; then
+    echo "⚠️  警告: Claude CLIがインストールされていません"
+    echo "   インストール方法: https://github.com/anthropics/claude-cli"
+    echo "   続行しますか？ (y/N)"
+    read -r response
+    if [[ ! "$response" =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+fi
+
+log_success "✅ 依存関係チェック完了"
 echo ""
 
 # STEP 1: 既存セッションクリーンアップ
@@ -109,15 +134,27 @@ echo ""
 # STEP 3: presidentセッション作成（1ペイン）
 log_info "👑 presidentセッション作成開始..."
 
-tmux new-session -d -s president
+# presidentセッション作成
+tmux new-session -d -s president -c "$(pwd)"
+
+# 作業ディレクトリ確認（念のため）
 tmux send-keys -t president "cd $(pwd)" C-m
+
 # PRESIDENTのカラープロンプト設定（マゼンタ色）
-set_shell_prompt "president" "PRESIDENT" "201"
+set_shell_prompt "president:0" "PRESIDENT" "201"
+
+# ウェルカムメッセージ
 tmux send-keys -t president "echo '=== PRESIDENT セッション ==='" C-m
 tmux send-keys -t president "echo 'プロジェクト統括責任者'" C-m
 tmux send-keys -t president "echo '========================'" C-m
 
-log_success "✅ presidentセッション作成完了"
+# セッション確認
+if tmux has-session -t president 2>/dev/null; then
+    log_success "✅ presidentセッション作成完了"
+else
+    log_error "❌ presidentセッション作成に失敗しました"
+    exit 1
+fi
 echo ""
 
 # STEP 4: 環境確認・表示
@@ -163,4 +200,10 @@ echo "     boss1: instructions/boss.md"
 echo "     worker1,2,3: instructions/worker.md"
 echo "     システム構造: CLAUDE.md"
 echo ""
-echo "  4. 🎯 デモ実行: PRESIDENTに「あなたはpresidentです。指示書に従って」と入力" 
+echo "  4. 🚀 推奨: 自動起動スクリプト使用"
+echo "     ./start-agents.sh"
+echo ""
+echo "  5. 🎯 デモ実行: PRESIDENTに「あなたはpresidentです。指示書に従って」と入力"
+echo ""
+echo "🔍 状態確認: ./check-status.sh"
+echo "📝 メッセージ履歴: ./agent-send.sh --history"

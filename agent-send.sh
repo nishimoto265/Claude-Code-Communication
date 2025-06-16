@@ -1,17 +1,115 @@
 #!/bin/bash
 
-# 🚀 Agent間メッセージ送信スクリプト
+# 🚀 Agent間メッセージ送信スクリプト（シナリオ対応版）
 
-# エージェント→tmuxターゲット マッピング
-get_agent_target() {
-    case "$1" in
-        "president") echo "president" ;;
-        "boss1") echo "multiagent:0.0" ;;
-        "worker1") echo "multiagent:0.1" ;;
-        "worker2") echo "multiagent:0.2" ;;
-        "worker3") echo "multiagent:0.3" ;;
-        *) echo "" ;;
+# 動的エージェントマッピングの読み込み
+load_agent_mapping() {
+    local mapping_file="./tmp/agent_mapping.sh"
+    
+    if [[ -f "$mapping_file" ]]; then
+        source "$mapping_file"
+        return 0
+    else
+        # フォールバック: デフォルトのhello-worldマッピング
+        get_agent_target() {
+            case "$1" in
+                "president") echo "president" ;;
+                "boss1") echo "multiagent:0.0" ;;
+                "worker1") echo "multiagent:0.1" ;;
+                "worker2") echo "multiagent:0.2" ;;
+                "worker3") echo "multiagent:0.3" ;;
+                *) echo "" ;;
+            esac
+        }
+        return 1
+    fi
+}
+
+# 現在のシナリオ情報を取得
+get_current_scenario() {
+    local scenario_file="./tmp/current_scenario.txt"
+    if [[ -f "$scenario_file" ]]; then
+        cat "$scenario_file"
+    else
+        echo "hello-world"
+    fi
+}
+
+# 利用可能エージェントの説明取得
+get_available_agents_description() {
+    local scenario=$(get_current_scenario)
+    case "$scenario" in
+        "hello-world")
+            echo "  president - プロジェクト統括責任者"
+            echo "  boss1     - チームリーダー"
+            echo "  worker1   - 実行担当者A"
+            echo "  worker2   - 実行担当者B"
+            echo "  worker3   - 実行担当者C"
+            ;;
+        "business-strategy")
+            echo "  ceo                  - 最高経営責任者"
+            echo "  cto                  - 最高技術責任者"
+            echo "  cfo                  - 最高財務責任者"
+            echo "  marketing_director   - マーケティング責任者"
+            echo "  product_manager      - プロダクトマネージャー"
+            echo "  data_analyst         - データアナリスト"
+            ;;
+        *)
+            echo "  シナリオが設定されていません。./scenario-manager.sh set <シナリオ名> を実行してください"
+            ;;
     esac
+}
+
+# メッセージ履歴表示
+show_recent_logs() {
+    if [ -f "logs/send_log.txt" ]; then
+        echo "📝 最新メッセージ履歴（5件）:"
+        echo "==========================="
+        tail -5 logs/send_log.txt
+        echo ""
+    else
+        echo "📝 メッセージ履歴がありません"
+    fi
+}
+
+# シナリオ情報表示
+show_scenario_info() {
+    local scenario=$(get_current_scenario)
+    echo "🎭 現在のシナリオ: $scenario"
+    echo "=============================="
+    echo ""
+    echo "👥 利用可能エージェント:"
+    get_available_agents_description
+    echo ""
+    
+    # エージェントマッピング表示
+    if [[ -f "./tmp/agent_mapping.sh" ]]; then
+        echo "🔗 エージェント→tmuxターゲット マッピング:"
+        load_agent_mapping
+        case "$scenario" in
+            "hello-world")
+                local agents=("president" "boss1" "worker1" "worker2" "worker3")
+                ;;
+            "business-strategy")
+                local agents=("ceo" "cto" "cfo" "marketing_director" "product_manager" "data_analyst")
+                ;;
+            *)
+                echo "  マッピング情報が利用できません"
+                return
+                ;;
+        esac
+        
+        for agent in "${agents[@]}"; do
+            local target=$(get_agent_target "$agent")
+            if [[ -n "$target" ]]; then
+                echo "  $agent → $target"
+            fi
+        done
+    else
+        echo "⚠️  エージェントマッピングファイルが見つかりません"
+        echo "   ./scenario-manager.sh set <シナリオ名> を実行してください"
+    fi
+    echo ""
 }
 
 show_usage() {
@@ -21,30 +119,65 @@ show_usage() {
 使用方法:
   $0 [エージェント名] [メッセージ]
   $0 --list
+  $0 --history
+  $0 --status
+  $0 --scenario
 
-利用可能エージェント:
-  president - プロジェクト統括責任者
-  boss1     - チームリーダー  
-  worker1   - 実行担当者A
-  worker2   - 実行担当者B
-  worker3   - 実行担当者C
+現在のシナリオに応じた利用可能エージェント:
+  $(get_available_agents_description)
 
 使用例:
-  $0 president "指示書に従って"
+  # Hello Worldシナリオ
+  $0 president "あなたはpresidentです。指示書に従って"
   $0 boss1 "Hello World プロジェクト開始指示"
-  $0 worker1 "作業完了しました"
+  
+  # Business Strategyシナリオ  
+  $0 ceo "あなたはCEOです。新しい事業戦略について議論を開始してください"
+  $0 cto "技術的な観点から提案をお願いします"
+
+オプション:
+  --history   最新メッセージ履歴を表示
+  --scenario  現在のシナリオ情報を表示
+  --status    システム状態確認（check-status.sh連携）
+  --status   システム状態を表示
 EOF
 }
 
-# エージェント一覧表示
+# エージェント一覧表示（シナリオ対応）
 show_agents() {
-    echo "📋 利用可能なエージェント:"
-    echo "=========================="
-    echo "  president → president:0     (プロジェクト統括責任者)"
-    echo "  boss1     → multiagent:0.0  (チームリーダー)"
-    echo "  worker1   → multiagent:0.1  (実行担当者A)"
-    echo "  worker2   → multiagent:0.2  (実行担当者B)" 
-    echo "  worker3   → multiagent:0.3  (実行担当者C)"
+    local scenario=$(get_current_scenario)
+    echo "📋 利用可能なエージェント（シナリオ: $scenario）:"
+    echo "================================================"
+    
+    # エージェントマッピング読み込み
+    if load_agent_mapping; then
+        case "$scenario" in
+            "hello-world")
+                local agents=("president" "boss1" "worker1" "worker2" "worker3")
+                local descriptions=("プロジェクト統括責任者" "チームリーダー" "実行担当者A" "実行担当者B" "実行担当者C")
+                ;;
+            "business-strategy")
+                local agents=("ceo" "cto" "cfo" "marketing_director" "product_manager" "data_analyst")
+                local descriptions=("最高経営責任者" "最高技術責任者" "最高財務責任者" "マーケティング責任者" "プロダクトマネージャー" "データアナリスト")
+                ;;
+            *)
+                echo "  未対応のシナリオ: $scenario"
+                return
+                ;;
+        esac
+        
+        for i in "${!agents[@]}"; do
+            local agent="${agents[$i]}"
+            local desc="${descriptions[$i]}"
+            local target=$(get_agent_target "$agent")
+            if [[ -n "$target" ]]; then
+                printf "  %-20s → %-15s (%s)\n" "$agent" "$target" "$desc"
+            fi
+        done
+    else
+        echo "  ⚠️  エージェントマッピングが見つかりません"
+        echo "     ./scenario-manager.sh set <シナリオ名> を実行してください"
+    fi
 }
 
 # ログ記録
@@ -97,11 +230,31 @@ main() {
         exit 1
     fi
     
-    # --listオプション
-    if [[ "$1" == "--list" ]]; then
-        show_agents
-        exit 0
-    fi
+    # オプション処理
+    case "$1" in
+        "--list")
+            show_agents
+            exit 0
+            ;;
+        "--history")
+            show_recent_logs
+            exit 0
+            ;;
+        "--scenario")
+            show_scenario_info
+            exit 0
+            ;;
+        "--status")
+            if [[ -x "./check-status.sh" ]]; then
+                echo "🔍 システム状態確認中..."
+                ./check-status.sh
+            else
+                echo "⚠️  check-status.sh が見つかりません"
+                show_scenario_info
+            fi
+            exit 0
+            ;;
+    esac
     
     if [[ $# -lt 2 ]]; then
         show_usage
@@ -110,6 +263,11 @@ main() {
     
     local agent_name="$1"
     local message="$2"
+    
+    # エージェントマッピング読み込み
+    if ! load_agent_mapping; then
+        echo "⚠️  エージェントマッピングが見つかりません。デフォルトマッピングを使用します。"
+    fi
     
     # エージェントターゲット取得
     local target
