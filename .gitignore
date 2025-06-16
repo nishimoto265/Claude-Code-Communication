@@ -18,3 +18,6 @@ Thumbs.db
 *~
 .vscode/
 .idea/ 
+
+# Claude Agents
+.claude-agents/
