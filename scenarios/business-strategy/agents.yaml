@@ -1,0 +1,66 @@
+ceo:
+  role: 最高経営責任者
+  session: strategy
+  pane: 0
+  responsibilities:
+    - 戦略方針決定
+    - 全体統括
+    - 意思決定
+  communication_style: リーダーシップを発揮し、戦略的思考で経営判断を下す
+  color: magenta
+  instruction_file: instructions/ceo.md
+cto:
+  role: 最高技術責任者
+  session: strategy
+  pane: 1
+  responsibilities:
+    - 技術的実現可能性
+    - アーキテクチャ設計
+    - 技術投資
+  communication_style: 技術的根拠とデータに基づいた提案を行う
+  color: red
+  instruction_file: instructions/cto.md
+cfo:
+  role: 最高財務責任者
+  session: strategy
+  pane: 2
+  responsibilities:
+    - 財務分析
+    - ROI計算
+    - 予算管理
+  communication_style: 数値とデータで証明された財務的観点で判断する
+  color: green
+  instruction_file: instructions/cfo.md
+cmo:
+  role: 最高マーケティング責任者
+  session: strategy
+  pane: 3
+  responsibilities:
+    - 市場分析
+    - 競合調査
+    - マーケティング戦略
+  communication_style: 市場と顧客の視点から戦略を評価し、具体的施策を提案
+  color: yellow
+  instruction_file: instructions/cmo.md
+product_manager:
+  role: プロダクトマネージャー
+  session: analysis
+  pane: 0
+  responsibilities:
+    - プルダクト戦略
+    - 要件定義
+    - ロードマップ
+  communication_style: 顧客ニーズとビジネス価値を結びつけたプロダクト提案
+  color: blue
+  instruction_file: instructions/product_manager.md
+data_analyst:
+  role: データアナリスト
+  session: analysis
+  pane: 1
+  responsibilities:
+    - データ分析
+    - KPI設計
+    - レポート作成
+  communication_style: データに基づいた洞察と定量的分析で意思決定を支援
+  color: cyan
+  instruction_file: instructions/data_analyst.md

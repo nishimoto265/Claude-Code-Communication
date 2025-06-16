@@ -1,0 +1,88 @@
+version: 2.0.0
+currentScenario: business-strategy
+projectName: CC-ProductManagement
+scenarios:
+  hello-world:
+    name: Hello World Demo
+    description: 基本的なマルチエージェント通信デモ
+    tmux_sessions:
+      president:
+        window_name: president
+        panes:
+          - role: president
+      multiagent:
+        window_name: multiagent-team
+        panes:
+          - role: boss1
+          - role: worker1
+          - role: worker2
+          - role: worker3
+    agents:
+      president:
+        role: 統括責任者
+        session: president
+        pane: 0
+      boss1:
+        role: チームリーダー
+        session: multiagent
+        pane: 0
+      worker1:
+        role: ワーカー1
+        session: multiagent
+        pane: 1
+      worker2:
+        role: ワーカー2
+        session: multiagent
+        pane: 2
+      worker3:
+        role: ワーカー3
+        session: multiagent
+        pane: 3
+  business-strategy:
+    name: Business Strategy Discussion
+    description: 事業戦略や経営方針を議論するシナリオ
+    tmux_sessions:
+      strategy:
+        window_name: strategy-team
+        panes:
+          - role: ceo
+          - role: cto
+          - role: cfo
+          - role: cmo
+      analysis:
+        window_name: analysis-team
+        panes:
+          - role: product_manager
+          - role: data_analyst
+    agents:
+      ceo:
+        role: 最高経営責任者
+        session: strategy
+        pane: 0
+      cto:
+        role: 最高技術責任者
+        session: strategy
+        pane: 1
+      cfo:
+        role: 最高財務責任者
+        session: strategy
+        pane: 2
+      cmo:
+        role: 最高マーケティング責任者
+        session: strategy
+        pane: 3
+      product_manager:
+        role: プロダクトマネージャー
+        session: analysis
+        pane: 0
+      data_analyst:
+        role: データアナリスト
+        session: analysis
+        pane: 1
+settings:
+  tmuxPrefix: C-b
+  autoStartClaude: true
+  logLevel: info
+  colorOutput: true
+createdAt: '2025-06-15T13:14:16.500Z'
+lastUpdated: '2025-06-15T23:59:35.209Z'

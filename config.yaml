@@ -1,0 +1,229 @@
+# 🤖 Multi-Agent System Configuration
+# シナリオ別のエージェント構成設定
+
+# デフォルト設定
+default:
+  tmux_sessions:
+    president: 1    # プレジデント用セッション（1ペイン）
+    multiagent: 4   # マルチエージェント用セッション（4ペイン）
+  
+  # 必要な依存関係
+  dependencies:
+    - tmux
+    - claude
+
+# シナリオ別設定
+scenarios:
+  # 既存のHello Worldデモ
+  hello-world:
+    name: "Hello World Demo"
+    description: "基本的なマルチエージェント通信デモ"
+    agents:
+      president:
+        role: "プロジェクト統括責任者"
+        session: "president"
+        pane: 0
+        color: "magenta"
+      boss1:
+        role: "チームリーダー"
+        session: "multiagent"
+        pane: 0
+        color: "red"
+      worker1:
+        role: "実行担当者A"
+        session: "multiagent"
+        pane: 1
+        color: "blue"
+      worker2:
+        role: "実行担当者B"
+        session: "multiagent"
+        pane: 2
+        color: "blue"
+      worker3:
+        role: "実行担当者C"
+        session: "multiagent"
+        pane: 3
+        color: "blue"
+    layout:
+      multiagent: "2x2"  # 2x2グリッド
+    initial_command: "あなたはpresidentです。指示書に従って"
+
+  # 事業戦略ディスカッション
+  business-strategy:
+    name: "Business Strategy Discussion"
+    description: "事業戦略や経営方針を議論するためのシナリオ"
+    agents:
+      ceo:
+        role: "最高経営責任者"
+        session: "strategy"
+        pane: 0
+        color: "magenta"
+      cto:
+        role: "最高技術責任者"
+        session: "strategy"
+        pane: 1
+        color: "cyan"
+      cfo:
+        role: "最高財務責任者"
+        session: "strategy"
+        pane: 2
+        color: "yellow"
+      cmo:
+        role: "最高マーケティング責任者"
+        session: "strategy"
+        pane: 3
+        color: "yellow"
+      product_manager:
+        role: "プロダクトマネージャー"
+        session: "analysis"
+        pane: 0
+        color: "blue"
+      data_analyst:
+        role: "データアナリスト"
+        session: "analysis"
+        pane: 1
+        color: "red"
+    tmux_sessions:
+      strategy: 4    # 戦略チーム
+      analysis: 2    # 分析チーム
+    layout:
+      strategy: "2x2"
+      analysis: "1x2"
+    initial_command: "あなたはCEOです。新しい事業戦略について議論を開始してください"
+
+  # 共同コーディング
+  collaborative-coding:
+    name: "Collaborative Coding"
+    description: "複数の開発者でコーディングプロジェクトを進めるシナリオ"
+    agents:
+      architect:
+        role: "ソフトウェアアーキテクト"
+        session: "development"
+        pane: 0
+        color: "magenta"
+      frontend_dev:
+        role: "フロントエンド開発者"
+        session: "development"
+        pane: 1
+        color: "cyan"
+      backend_dev:
+        role: "バックエンド開発者"
+        session: "development"
+        pane: 2
+        color: "green"
+      devops:
+        role: "DevOpsエンジニア"
+        session: "development"
+        pane: 3
+        color: "yellow"
+      qa_engineer:
+        role: "QAエンジニア"
+        session: "quality"
+        pane: 0
+        color: "red"
+      tech_lead:
+        role: "テックリード"
+        session: "quality"
+        pane: 1
+        color: "blue"
+    tmux_sessions:
+      development: 4  # 開発チーム
+      quality: 2      # 品質管理チーム
+    layout:
+      development: "2x2"
+      quality: "1x2"
+    initial_command: "あなたはアーキテクトです。新しいプロジェクトの技術仕様について議論を始めてください"
+
+  # 市場分析・競合調査
+  market-analysis:
+    name: "Market Analysis & Competitive Research"
+    description: "市場分析と競合調査を行うシナリオ"
+    agents:
+      market_researcher:
+        role: "市場調査責任者"
+        session: "research"
+        pane: 0
+        color: "magenta"
+      competitive_analyst:
+        role: "競合分析専門家"
+        session: "research"
+        pane: 1
+        color: "cyan"
+      consumer_insights:
+        role: "消費者インサイト専門家"
+        session: "research"
+        pane: 2
+        color: "green"
+      trend_analyst:
+        role: "トレンドアナリスト"
+        session: "research"
+        pane: 3
+        color: "yellow"
+      business_analyst:
+        role: "ビジネスアナリスト"
+        session: "analysis"
+        pane: 0
+        color: "blue"
+      strategy_consultant:
+        role: "戦略コンサルタント"
+        session: "analysis"
+        pane: 1
+        color: "red"
+    tmux_sessions:
+      research: 4   # リサーチチーム
+      analysis: 2   # 分析チーム
+    layout:
+      research: "2x2"
+      analysis: "1x2"
+    initial_command: "あなたは市場調査責任者です。新しい市場への参入について分析を開始してください"
+
+  # プロダクト開発
+  product-development:
+    name: "Product Development"
+    description: "プロダクト開発チームでの協働シナリオ"
+    agents:
+      product_owner:
+        role: "プロダクトオーナー"
+        session: "product"
+        pane: 0
+        color: "magenta"
+      ux_designer:
+        role: "UXデザイナー"
+        session: "product"
+        pane: 1
+        color: "cyan"
+      ui_designer:
+        role: "UIデザイナー"
+        session: "product"
+        pane: 2
+        color: "green"
+      user_researcher:
+        role: "ユーザーリサーチャー"
+        session: "product"
+        pane: 3
+        color: "yellow"
+    tmux_sessions:
+      product: 4
+    layout:
+      product: "2x2"
+    initial_command: "あなたはプロダクトオーナーです。新機能の開発について議論を始めてください"
+
+# カラーマッピング（ANSI色コード）
+colors:
+  magenta: 201    # \033[1;35m
+  red: 196        # \033[1;31m
+  blue: 21        # \033[1;34m
+  cyan: 51        # \033[1;36m
+  green: 46       # \033[1;32m
+  yellow: 226     # \033[1;33m
+
+# tmuxレイアウト設定
+layouts:
+  "1x2": "even-horizontal"    # 水平分割
+  "2x1": "even-vertical"      # 垂直分割
+  "2x2": "tiled"              # 2x2グリッド
+  "1x3": "main-horizontal"    # メイン+水平分割
+  "1x4": "main-horizontal"    # メイン+水平分割（4ペイン）
+
+# 設定バージョン
+version: "1.0.0"

@@ -1,0 +1,26 @@
+tmux_sessions:
+  strategy:
+    window_name: strategy-team
+    layout: tiled
+    panes:
+      - role: ceo
+        color: magenta
+      - role: cto
+        color: red
+      - role: cfo
+        color: green
+      - role: cmo
+        color: yellow
+  analysis:
+    window_name: analysis-team
+    layout: even-horizontal
+    panes:
+      - role: product_manager
+        color: blue
+      - role: data_analyst
+        color: cyan
+layout_descriptions:
+  tiled: 2x2 grid layout for 4 panes
+  even-horizontal: Horizontal split for 2 panes
+  even-vertical: Vertical split for 2 panes
+  main-horizontal: Main pane with horizontal splits

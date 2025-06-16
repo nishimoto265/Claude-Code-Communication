@@ -1,0 +1,13 @@
+name: Business Strategy Discussion
+description: 事業戦略や経営方針を議論するためのシナリオ
+version: 2.0.0
+author: Claude Agents
+tags:
+  - strategy
+  - executive
+  - planning
+initial_message: あなたはCEOです。新しい事業戦略について議論を開始してください
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.5
+  enable_logging: true

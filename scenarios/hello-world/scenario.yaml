@@ -1,0 +1,14 @@
+name: Hello World Demo
+description: 基本的なマルチエージェント通信デモ - president、boss、workerの階層構造でシンプルなタスク実行を行う
+version: 2.0.0
+author: Claude Agents
+tags:
+  - demo
+  - basic
+  - tutorial
+  - hello-world
+initial_message: あなたはPresidentです。Hello Worldプロジェクトを開始してください
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.5
+  enable_logging: true

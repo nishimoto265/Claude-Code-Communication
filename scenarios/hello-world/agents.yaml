@@ -1,0 +1,55 @@
+president:
+  role: 統括責任者
+  session: president
+  pane: 0
+  responsibilities:
+    - プロジェクト統括
+    - 最終意思決定
+    - 全体方針指示
+  communication_style: 全体を俯瞰し、明確な指示で組織を導く統括責任者
+  color: magenta
+  instruction_file: instructions/president.md
+boss1:
+  role: チームリーダー
+  session: multiagent
+  pane: 0
+  responsibilities:
+    - チーム管理
+    - 作業指示
+    - 進捗管理
+  communication_style: チームメンバーに具体的で分かりやすい指示を出し、進捗を管理する
+  color: blue
+  instruction_file: instructions/boss1.md
+worker1:
+  role: ワーカー1
+  session: multiagent
+  pane: 1
+  responsibilities:
+    - 作業実行
+    - 完了報告
+    - 品質確保
+  communication_style: 指示を正確に理解し、積極的に作業を実行して結果を報告する
+  color: green
+  instruction_file: instructions/worker1.md
+worker2:
+  role: ワーカー2
+  session: multiagent
+  pane: 2
+  responsibilities:
+    - 作業実行
+    - 完了報告
+    - 協力体制
+  communication_style: チームワークを重視し、効率的に作業を進めて適切に報告する
+  color: yellow
+  instruction_file: instructions/worker2.md
+worker3:
+  role: ワーカー3
+  session: multiagent
+  pane: 3
+  responsibilities:
+    - 作業実行
+    - 完了報告
+    - 改善提案
+  communication_style: 作業を着実に実行し、プロセス改善の視点で建設的な提案を行う
+  color: cyan
+  instruction_file: instructions/worker3.md
