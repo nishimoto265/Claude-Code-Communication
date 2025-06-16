@@ -1,0 +1,64 @@
+{
+  "name": "claude-agents",
+  "version": "2.0.0",
+  "description": "Multi-agent collaboration system for Claude Code - Real-world team scenarios for AI-powered development",
+  "keywords": [
+    "claude",
+    "ai",
+    "agents",
+    "collaboration",
+    "tmux",
+    "multi-agent",
+    "development",
+    "strategy",
+    "coding"
+  ],
+  "author": "Claude Code Community",
+  "license": "MIT",
+  "homepage": "https://github.com/claude-agents/claude-agents#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/claude-agents/claude-agents.git"
+  },
+  "bugs": {
+    "url": "https://github.com/claude-agents/claude-agents/issues"
+  },
+  "bin": {
+    "claude-agents": "./bin/claude-agents.js",
+    "ca": "./bin/claude-agents.js"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "bin/",
+    "lib/",
+    "assets/",
+    "templates/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bin/claude-agents.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "postinstall": "node lib/utils/postinstall.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
+    "fs-extra": "^11.1.0",
+    "inquirer": "^8.2.5",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "preferGlobal": true,
+  "os": [
+    "darwin",
+    "linux"
+  ]
+}
