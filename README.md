@@ -128,6 +128,221 @@ claude-agents switch market-analysis
 claude-agents status
 ```
 
+## 🛠️ カスタムシナリオ作成
+
+### 📁 シナリオディレクトリ構造
+
+新しいシナリオを作成するには、`scenarios/`ディレクトリに以下の構造でファイルを作成します：
+
+```
+scenarios/
+└── your-custom-scenario/
+    ├── scenario.yaml      # シナリオメタデータ
+    ├── agents.yaml        # エージェント定義
+    ├── layout.yaml        # tmux画面配置
+    └── instructions/      # エージェント別指示書
+        ├── agent1.md
+        ├── agent2.md
+        └── agent3.md
+```
+
+### 📝 必須ファイルの詳細
+
+#### 1. scenario.yaml (シナリオメタデータ)
+```yaml
+name: Product Development Sprint
+description: プロダクト開発チームのスプリント計画と実行
+version: 2.0.0
+author: Your Name
+tags:
+  - development
+  - agile
+  - product
+initial_message: スプリント計画会議を開始します。今回の開発目標を確認しましょう
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.5
+  enable_logging: true
+```
+
+#### 2. agents.yaml (エージェント定義)
+```yaml
+product_owner:
+  role: プロダクトオーナー
+  session: development
+  pane: 0
+  responsibilities:
+    - ユーザーストーリー作成
+    - 優先順位決定
+    - 受け入れ基準定義
+  communication_style: ビジネス価値と顧客視点で判断
+  color: blue
+  instruction_file: instructions/product_owner.md
+
+tech_lead:
+  role: テックリード
+  session: development
+  pane: 1
+  responsibilities:
+    - アーキテクチャ設計
+    - 技術的課題解決
+    - コードレビュー
+  communication_style: 技術的実現性と品質を重視
+  color: red
+  instruction_file: instructions/tech_lead.md
+
+frontend_dev:
+  role: フロントエンド開発者
+  session: development
+  pane: 2
+  responsibilities:
+    - UI/UX実装
+    - フロントエンド設計
+    - ユーザビリティ改善
+  color: green
+  instruction_file: instructions/frontend_dev.md
+
+backend_dev:
+  role: バックエンド開発者
+  session: development
+  pane: 3
+  responsibilities:
+    - API設計・実装
+    - データベース設計
+    - パフォーマンス最適化
+  color: yellow
+  instruction_file: instructions/backend_dev.md
+```
+
+#### 3. layout.yaml (tmux画面配置)
+```yaml
+tmux_sessions:
+  development:
+    window_name: dev-team
+    layout: tiled
+    panes:
+      - role: product_owner
+        color: blue
+      - role: tech_lead
+        color: red
+      - role: frontend_dev
+        color: green
+      - role: backend_dev
+        color: yellow
+
+layout_descriptions:
+  tiled: 2x2 grid layout for 4 development roles
+  main-horizontal: Main pane with horizontal splits
+  even-horizontal: Horizontal split for 2 panes
+  even-vertical: Vertical split for 2 panes
+```
+
+#### 4. instructions/agent.md (個別指示書)
+```markdown
+# プロダクトオーナーの役割
+
+あなたはプロダクトオーナーです。
+
+## 主な責任
+- ユーザーストーリーの作成と優先順位付け
+- 受け入れ基準の定義
+- ステークホルダーとの調整
+
+## 行動指針
+1. 常にユーザー価値を意識する
+2. ビジネス目標との整合性を確保
+3. 開発チームとの円滑なコミュニケーション
+
+## コミュニケーション
+- 具体的なユーザーストーリーで要件を説明
+- ビジネス価値と技術的制約のバランスを考慮
+- 優先順位の理由を明確に説明
+```
+
+### 🎯 メイン設定への登録
+
+新しいシナリオを作成後、`claude-agents.yaml`に追加します：
+
+```yaml
+scenarios:
+  # 既存のシナリオ...
+  product-development:
+    name: Product Development Sprint
+    description: プロダクト開発チームのアジャイル開発シナリオ
+    type: external
+    path: scenarios/product-development
+```
+
+### 🔄 カスタマイズのポイント
+
+#### **A. チーム構成のバリエーション**
+- **小規模チーム**: 3-4人構成
+- **大規模チーム**: 6-8人構成（複数セッション）
+- **専門チーム**: AI研究、セキュリティ、インフラなど
+
+#### **B. 業界別シナリオ例**
+```
+scenarios/
+├── healthcare-consultation/    # 医療相談チーム
+├── legal-review/              # 法務レビューチーム  
+├── financial-planning/        # 金融プランニング
+├── education-curriculum/      # 教育カリキュラム設計
+└── marketing-campaign/        # マーケティングキャンペーン
+```
+
+#### **C. 複数セッション構成例**
+```yaml
+# 大規模開発チーム例
+tmux_sessions:
+  core-dev:
+    window_name: core-development
+    panes: 
+      - role: tech_lead
+      - role: senior_dev1
+      - role: senior_dev2
+  frontend-team:
+    window_name: frontend-team  
+    panes: 
+      - role: frontend_lead
+      - role: ui_designer
+      - role: qa_engineer
+  backend-team:
+    window_name: backend-team
+    panes: 
+      - role: backend_lead
+      - role: devops
+      - role: database_admin
+```
+
+### 🚀 作成後の動作確認
+
+```bash
+# 1. 新しいシナリオで起動
+claude-agents start product-development
+
+# 2. エージェント一覧確認
+claude-agents status --agents
+
+# 3. メッセージ送信テスト
+claude-agents send product_owner "今回のスプリント目標を共有します"
+claude-agents send tech_lead "技術的なリスクを評価してください"
+claude-agents send frontend_dev "UI設計の方針を確認します"
+claude-agents send backend_dev "API仕様について議論しましょう"
+
+# 4. tmuxセッションアクセス
+tmux attach-session -t development
+```
+
+### 💡 ベストプラクティス
+
+1. **役割を明確化**: 各エージェントの責任範囲を重複なく定義
+2. **現実的な構成**: 実際のチーム構成に基づいてエージェントを設計
+3. **段階的な議論**: initial_messageで適切な開始点を設定
+4. **専門性の活用**: 各エージェントの専門分野を活かせるシナリオ設計
+5. **継続的改善**: 実際の使用結果を基にシナリオを調整
+
+この方法で、業界や用途に特化した無限のシナリオを作成できます。
+
 ## 🖥️ tmuxセッションアクセス
 
 ### Business Strategy シナリオ
