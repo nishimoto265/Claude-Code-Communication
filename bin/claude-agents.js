@@ -15,6 +15,7 @@ const startCommand = require('../lib/commands/start');
 const switchCommand = require('../lib/commands/switch');
 const sendCommand = require('../lib/commands/send');
 const statusCommand = require('../lib/commands/status');
+const createScenarioCommand = require('../lib/commands/create-scenario');
 
 const program = new Command();
 
@@ -85,6 +86,17 @@ program
     await resetEnvironment(options);
   });
 
+program
+  .command('create-scenario')
+  .alias('create')
+  .description('Create new custom scenario with interactive wizard')
+  .option('-n, --name <name>', 'scenario name')
+  .option('-d, --description <desc>', 'scenario description')
+  .option('-c, --category <category>', 'scenario category')
+  .option('-a, --author <author>', 'scenario author')
+  .option('--initial-message <message>', 'initial message for scenario')
+  .action(createScenarioCommand);
+
 // Help customization
 program.on('--help', () => {
   console.log('');
@@ -93,6 +105,7 @@ program.on('--help', () => {
   console.log('  $ claude-agents start business-strategy  Start business strategy scenario');
   console.log('  $ claude-agents send ceo "Hello"         Send message to CEO agent');
   console.log('  $ claude-agents switch market-analysis   Switch to market analysis');
+  console.log('  $ claude-agents create-scenario          Create new custom scenario');
   console.log('  $ claude-agents status                   Show current status');
   console.log('');
   console.log(chalk.cyan('Quick Start:'));

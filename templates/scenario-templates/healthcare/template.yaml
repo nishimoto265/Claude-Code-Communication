@@ -1,0 +1,50 @@
+name: Healthcare Consultation Template
+description: Template for healthcare consultation and medical collaboration scenarios
+category: healthcare
+tags:
+  - medical
+  - healthcare
+  - consultation
+
+default_agents:
+  - id: attending_physician
+    role: 主治医
+    color: red
+    responsibilities:
+      - 診断と治療計画
+      - 医療チーム統括
+      - 患者・家族への説明
+  
+  - id: specialist
+    role: 専門医
+    color: blue
+    responsibilities:
+      - 専門分野での診断
+      - 治療方針助言
+      - 検査結果解釈
+  
+  - id: nurse_manager
+    role: 看護師長
+    color: green
+    responsibilities:
+      - 看護計画策定
+      - 患者ケア管理
+      - チーム調整
+  
+  - id: pharmacist
+    role: 薬剤師
+    color: yellow
+    responsibilities:
+      - 薬物療法監視
+      - 副作用管理
+      - 薬剤相互作用確認
+
+tmux_layout:
+  primary_session:
+    layout: tiled
+    max_panes: 4
+
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.7
+  enable_logging: true

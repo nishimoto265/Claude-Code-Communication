@@ -69,11 +69,14 @@ npm link
 node bin/claude-agents.js init
 node bin/claude-agents.js start business-strategy
 
+# カスタムシナリオ作成
+node bin/claude-agents.js create-scenario
+
 # デバッグモード
 DEBUG=claude-agents* claude-agents start
 
 # 設定・ログ確認
-cat claude-agents.json
+cat claude-agents.yaml
 tail -f logs/send_log.jsonl
 ```
 

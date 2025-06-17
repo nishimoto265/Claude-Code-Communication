@@ -155,6 +155,32 @@ claude-agents reset
 claude-agents reset --force
 ```
 
+### `claude-agents create-scenario`
+新しいカスタムシナリオを対話式で作成します。
+
+```bash
+claude-agents create-scenario [options]
+```
+
+**オプション:**
+- `-n, --name <name>`: シナリオ名
+- `-d, --description <desc>`: シナリオ説明
+- `-c, --category <category>`: シナリオカテゴリ
+- `-a, --author <author>`: 作成者名
+- `--initial-message <message>`: 開始時メッセージ
+
+**例:**
+```bash
+# 対話式でシナリオ作成
+claude-agents create-scenario
+
+# パラメータ指定で作成
+claude-agents create-scenario --name "AI研究チーム" --category development
+
+# エイリアス使用
+claude-agents create --name "マーケティング戦略" --description "新商品マーケティング"
+```
+
 ## グローバルオプション
 
 全コマンドで使用可能なオプション:

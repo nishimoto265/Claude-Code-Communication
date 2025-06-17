@@ -1,0 +1,50 @@
+name: Business Strategy Template
+description: Template for business strategy and executive planning scenarios
+category: business
+tags:
+  - strategy
+  - executive
+  - planning
+
+default_agents:
+  - id: ceo
+    role: 最高経営責任者
+    color: magenta
+    responsibilities:
+      - 戦略方針決定
+      - 全体統括
+      - 意思決定
+  
+  - id: cto
+    role: 最高技術責任者
+    color: red
+    responsibilities:
+      - 技術的実現可能性
+      - アーキテクチャ設計
+      - 技術投資
+  
+  - id: cfo
+    role: 最高財務責任者
+    color: green
+    responsibilities:
+      - 財務分析
+      - ROI計算
+      - 予算管理
+  
+  - id: cmo
+    role: 最高マーケティング責任者
+    color: yellow
+    responsibilities:
+      - 市場分析
+      - 競合調査
+      - マーケティング戦略
+
+tmux_layout:
+  primary_session:
+    layout: tiled
+    max_panes: 4
+
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.5
+  enable_logging: true

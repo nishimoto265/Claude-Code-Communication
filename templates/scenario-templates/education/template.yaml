@@ -1,0 +1,50 @@
+name: Education Curriculum Template
+description: Template for educational curriculum design and academic collaboration scenarios
+category: education
+tags:
+  - learning
+  - academic
+  - curriculum
+
+default_agents:
+  - id: curriculum_designer
+    role: カリキュラム設計者
+    color: blue
+    responsibilities:
+      - 学習目標設定
+      - カリキュラム構成
+      - 進度計画策定
+  
+  - id: subject_expert
+    role: 専門分野講師
+    color: red
+    responsibilities:
+      - 専門知識提供
+      - 教材内容監修
+      - 学習効果評価
+  
+  - id: educational_technologist
+    role: 教育工学専門家
+    color: green
+    responsibilities:
+      - 学習技術選定
+      - デジタル教材開発
+      - 学習分析
+  
+  - id: assessment_specialist
+    role: 評価専門家
+    color: yellow
+    responsibilities:
+      - 評価方法設計
+      - 学習成果測定
+      - フィードバック体系
+
+tmux_layout:
+  primary_session:
+    layout: tiled
+    max_panes: 4
+
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.6
+  enable_logging: true

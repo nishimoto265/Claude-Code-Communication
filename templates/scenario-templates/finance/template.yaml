@@ -1,0 +1,50 @@
+name: Financial Planning Template
+description: Template for financial planning and investment analysis scenarios
+category: finance
+tags:
+  - financial
+  - investment
+  - analysis
+
+default_agents:
+  - id: financial_advisor
+    role: ファイナンシャルアドバイザー
+    color: blue
+    responsibilities:
+      - 資産運用計画
+      - リスク評価
+      - 投資戦略提案
+  
+  - id: investment_analyst
+    role: 投資アナリスト
+    color: green
+    responsibilities:
+      - 市場分析
+      - 投資商品評価
+      - ポートフォリオ最適化
+  
+  - id: risk_manager
+    role: リスクマネージャー
+    color: red
+    responsibilities:
+      - リスク分析
+      - リスク管理策定
+      - 規制対応
+  
+  - id: tax_specialist
+    role: 税務専門家
+    color: yellow
+    responsibilities:
+      - 税務計画
+      - 節税対策
+      - 税制改正対応
+
+tmux_layout:
+  primary_session:
+    layout: tiled
+    max_panes: 4
+
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.5
+  enable_logging: true

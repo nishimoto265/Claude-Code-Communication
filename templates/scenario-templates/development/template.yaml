@@ -1,0 +1,58 @@
+name: Software Development Template
+description: Template for software development and technical collaboration scenarios
+category: development
+tags:
+  - coding
+  - technical
+  - agile
+
+default_agents:
+  - id: tech_lead
+    role: テックリード
+    color: red
+    responsibilities:
+      - アーキテクチャ設計
+      - 技術的課題解決
+      - コードレビュー
+  
+  - id: frontend_dev
+    role: フロントエンド開発者
+    color: blue
+    responsibilities:
+      - UI/UX実装
+      - フロントエンド設計
+      - ユーザビリティ改善
+  
+  - id: backend_dev
+    role: バックエンド開発者
+    color: green
+    responsibilities:
+      - API設計・実装
+      - データベース設計
+      - パフォーマンス最適化
+  
+  - id: devops
+    role: DevOpsエンジニア
+    color: yellow
+    responsibilities:
+      - インフラ管理
+      - CI/CD構築
+      - 運用監視
+  
+  - id: qa_engineer
+    role: QAエンジニア
+    color: cyan
+    responsibilities:
+      - テスト設計
+      - 品質管理
+      - バグ検証
+
+tmux_layout:
+  primary_session:
+    layout: tiled
+    max_panes: 6
+
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.3
+  enable_logging: true
