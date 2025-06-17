@@ -121,6 +121,9 @@ claude-agents list
 # シナリオ詳細
 claude-agents list --detailed
 
+# 新しいシナリオ作成（対話式）
+claude-agents create-scenario
+
 # シナリオ切り替え
 claude-agents switch market-analysis
 
@@ -128,11 +131,41 @@ claude-agents switch market-analysis
 claude-agents status
 ```
 
-## 🛠️ カスタムシナリオ作成
+## ✨ カスタムシナリオ作成
+
+### 🧙‍♂️ 対話式シナリオ作成ウィザード（推奨）
+
+最も簡単な方法は、対話式ウィザードを使用することです：
+
+```bash
+# 対話式ウィザードでシナリオ作成
+claude-agents create-scenario
+
+# エイリアス使用
+claude-agents create
+
+# パラメータ指定での高速作成
+claude-agents create-scenario --name "AI研究チーム" --category research
+```
+
+**ウィザードの流れ：**
+1. 📝 シナリオ名・説明の入力
+2. 🏢 カテゴリ選択（ビジネス、開発、ヘルスケアなど）
+3. 👥 エージェント数と役割設定
+4. 🖥️ tmux画面配置の自動設定
+5. ✅ 自動ファイル生成・設定登録
+
+**作成されるファイル：**
+- `scenarios/your-scenario/scenario.yaml` - メタデータ
+- `scenarios/your-scenario/agents.yaml` - エージェント定義
+- `scenarios/your-scenario/layout.yaml` - tmux配置
+- `scenarios/your-scenario/instructions/*.md` - 指示書テンプレート
+
+### 🛠️ 手動作成（上級者向け）
 
 ### 📁 シナリオディレクトリ構造
 
-新しいシナリオを作成するには、`scenarios/`ディレクトリに以下の構造でファイルを作成します：
+手動でシナリオを作成する場合は、`scenarios/`ディレクトリに以下の構造でファイルを作成します：
 
 ```
 scenarios/

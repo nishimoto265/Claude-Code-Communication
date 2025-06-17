@@ -84,6 +84,9 @@ node bin/claude-agents.js init
 node bin/claude-agents.js start business-strategy
 node bin/claude-agents.js send ceo "テストメッセージ"
 
+# カスタムシナリオ作成（新機能）
+node bin/claude-agents.js create-scenario
+
 # デバッグモード
 DEBUG=claude-agents* node bin/claude-agents.js start
 ```
@@ -158,6 +161,7 @@ lib/
 │   ├── init.js       # プロジェクト初期化
 │   ├── start.js      # エージェント起動
 │   ├── send.js       # メッセージ送信 ⭐
+│   ├── create-scenario.js # シナリオ作成ウィザード ⭐ NEW
 │   ├── switch.js     # シナリオ切り替え
 │   └── status.js     # 状態確認
 ├── core/             # コア機能
@@ -167,14 +171,16 @@ lib/
 │   └── scenario-manager.js # シナリオ管理
 └── utils/            # ユーティリティ
     ├── dependency-checker.js
+    ├── scenario-generator.js # シナリオファイル生成 ⭐ NEW
     └── file-helpers.js
 ```
 
 ### 重要な処理フロー
 1. **初期化**: `init.js` → 設定ファイル生成
-2. **セッション構築**: `start.js` → `tmux-manager.js` → tmux自動構築
-3. **エージェント配置**: `agent-manager.js` → 動的マッピング生成
-4. **メッセージ送信**: `send.js` → tmuxターゲット特定 → 送信実行
+2. **シナリオ作成**: `create-scenario.js` → `scenario-generator.js` → YAML自動生成 ⭐ NEW
+3. **セッション構築**: `start.js` → `tmux-manager.js` → tmux自動構築
+4. **エージェント配置**: `agent-manager.js` → 動的マッピング生成
+5. **メッセージ送信**: `send.js` → tmuxターゲット特定 → 送信実行
 
 ## 拡張ポイント
 
