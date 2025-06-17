@@ -79,6 +79,11 @@ scenarios:
         role: データアナリスト
         session: analysis
         pane: 1
+  collaborative-coding:
+    name: Collaborative Coding Session
+    description: ソフトウェア開発チームによる協働プログラミングシナリオ
+    type: external
+    path: scenarios/collaborative-coding
 settings:
   tmuxPrefix: C-b
   autoStartClaude: true

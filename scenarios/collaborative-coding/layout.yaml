@@ -1,0 +1,23 @@
+tmux_sessions:
+  development:
+    window_name: dev-team
+    layout: tiled
+    panes:
+      - role: tech_lead
+        color: red
+      - role: frontend_dev
+        color: blue
+      - role: backend_dev
+        color: green
+      - role: devops
+        color: yellow
+      - role: qa_engineer
+        color: cyan
+      - role: product_owner
+        color: magenta
+
+layout_descriptions:
+  tiled: 2x3 grid layout for 6 development team members
+  main-horizontal: Main pane with horizontal splits for smaller teams
+  even-horizontal: Horizontal split for paired programming
+  even-vertical: Vertical split for code review sessions

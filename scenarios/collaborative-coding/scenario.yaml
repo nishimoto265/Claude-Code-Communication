@@ -1,0 +1,14 @@
+name: Collaborative Coding Session
+description: ソフトウェア開発チームによる協働プログラミングシナリオ - アーキテクチャ設計から実装、テストまでの開発プロセス全体をカバー
+version: 2.0.0
+author: Claude Agents
+tags:
+  - coding
+  - technical
+  - agile
+  - development
+initial_message: あなたはテックリードです。新機能の開発について技術的な議論を開始してください。今回のスプリントで実装する機能の概要と技術的な課題について説明してください。
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.3
+  enable_logging: true
