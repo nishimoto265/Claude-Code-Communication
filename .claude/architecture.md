@@ -72,27 +72,24 @@ NPMパッケージ claude-agents
 
 ## 設定管理システム
 
-### 設定ファイル（claude-agents.json）
-```json
-{
-  "version": "2.0.0",
-  "currentScenario": "business-strategy",
-  "projectName": "MyProject",
-  "scenarios": {
-    "business-strategy": {
-      "name": "Business Strategy Discussion",
-      "description": "事業戦略や経営方針を議論するシナリオ",
-      "tmux_sessions": { /* セッション定義 */ },
-      "agents": { /* エージェント定義 */ }
-    }
-  },
-  "settings": {
-    "tmuxPrefix": "C-b",
-    "autoStartClaude": true,
-    "logLevel": "info",
-    "colorOutput": true
-  }
-}
+### 設定ファイル（claude-agents.yaml）
+```yaml
+version: 2.0.0
+currentScenario: business-strategy
+projectName: MyProject
+
+scenarios:
+  business-strategy:
+    name: Business Strategy Discussion
+    description: 事業戦略や経営方針を議論するシナリオ
+    tmux_sessions: # セッション定義
+    agents: # エージェント定義
+
+settings:
+  tmuxPrefix: C-b
+  autoStartClaude: true
+  logLevel: info
+  colorOutput: true
 ```
 
 ### シナリオ定義形式

@@ -130,23 +130,20 @@ scenarios:
     description: "戦略会議シナリオ"
 ```
 
-**v2.0 形式（claude-agents.json）**:
-```json
-{
-  "version": "2.0.0",
-  "currentScenario": "business-strategy",
-  "projectName": "MyProject",
-  "scenarios": {
-    "business-strategy": {
-      "name": "Business Strategy Discussion",
-      "description": "事業戦略や経営方針を議論するシナリオ"
-    }
-  },
-  "settings": {
-    "messageWaitTime": 0.5,
-    "autoStartClaude": true
-  }
-}
+**v2.0 形式（claude-agents.yaml）**:
+```yaml
+version: 2.0.0
+currentScenario: business-strategy
+projectName: MyProject
+
+scenarios:
+  business-strategy:
+    name: Business Strategy Discussion
+    description: 事業戦略や経営方針を議論するシナリオ
+
+settings:
+  messageWaitTime: 0.5
+  autoStartClaude: true
 ```
 
 ### コマンド対応表

@@ -8,45 +8,60 @@ claude-agentsのシナリオシステムの詳細な管理方法を説明しま�
 **概要**: CEO、CTO、CFO、マーケティング責任者による戦略討議
 
 **エージェント構成**:
-```json
-{
-  "ceo": {
-    "role": "最高経営責任者",
-    "responsibilities": ["戦略方針決定", "全体統括", "意思決定"],
-    "session": "strategy",
-    "pane": 0
-  },
-  "cto": {
-    "role": "最高技術責任者", 
-    "responsibilities": ["技術的実現可能性", "アーキテクチャ設計", "技術投資"],
-    "session": "strategy",
-    "pane": 1
-  },
-  "cfo": {
-    "role": "最高財務責任者",
-    "responsibilities": ["財務分析", "ROI計算", "予算管理"],
-    "session": "strategy", 
-    "pane": 2
-  },
-  "marketing_director": {
-    "role": "マーケティング責任者",
-    "responsibilities": ["市場分析", "競合調査", "マーケティング戦略"],
-    "session": "strategy",
-    "pane": 3
-  },
-  "product_manager": {
-    "role": "プロダクトマネージャー",
-    "responsibilities": ["プロダクト戦略", "要件定義", "ロードマップ"],
-    "session": "analysis",
-    "pane": 0
-  },
-  "data_analyst": {
-    "role": "データアナリスト", 
-    "responsibilities": ["データ分析", "KPI設計", "レポート作成"],
-    "session": "analysis",
-    "pane": 1
-  }
-}
+```yaml
+ceo:
+  role: 最高経営責任者
+  responsibilities:
+    - 戦略方針決定
+    - 全体統括
+    - 意思決定
+  session: strategy
+  pane: 0
+
+cto:
+  role: 最高技術責任者
+  responsibilities:
+    - 技術的実現可能性
+    - アーキテクチャ設計
+    - 技術投資
+  session: strategy
+  pane: 1
+
+cfo:
+  role: 最高財務責任者
+  responsibilities:
+    - 財務分析
+    - ROI計算
+    - 予算管理
+  session: strategy
+  pane: 2
+
+marketing_director:
+  role: マーケティング責任者
+  responsibilities:
+    - 市場分析
+    - 競合調査
+    - マーケティング戦略
+  session: strategy
+  pane: 3
+
+product_manager:
+  role: プロダクトマネージャー
+  responsibilities:
+    - プロダクト戦略
+    - 要件定義
+    - ロードマップ
+  session: analysis
+  pane: 0
+
+data_analyst:
+  role: データアナリスト
+  responsibilities:
+    - データ分析
+    - KPI設計
+    - レポート作成
+  session: analysis
+  pane: 1
 ```
 
 **tmux構成**:
@@ -57,27 +72,47 @@ claude-agentsのシナリオシステムの詳細な管理方法を説明しま�
 **概要**: 基本的なマルチエージェント通信デモ
 
 **エージェント構成**:
-```json
-{
-  "president": {
-    "role": "統括責任者",
-    "responsibilities": ["プロジェクト統括", "最終意思決定"],
-    "session": "president",
-    "pane": 0
-  },
-  "boss1": {
-    "role": "チームリーダー",
-    "responsibilities": ["チーム管理", "作業指示", "進捗管理"],
-    "session": "multiagent", 
-    "pane": 0
-  },
-  "worker1,2,3": {
-    "role": "ワーカー",
-    "responsibilities": ["作業実行", "完了報告"],
-    "session": "multiagent",
-    "pane": "1-3"
-  }
-}
+```yaml
+president:
+  role: 統括責任者
+  responsibilities:
+    - プロジェクト統括
+    - 最終意思決定
+  session: president
+  pane: 0
+
+boss1:
+  role: チームリーダー
+  responsibilities:
+    - チーム管理
+    - 作業指示
+    - 進捗管理
+  session: multiagent
+  pane: 0
+
+worker1:
+  role: ワーカー1
+  responsibilities:
+    - 作業実行
+    - 完了報告
+  session: multiagent
+  pane: 1
+
+worker2:
+  role: ワーカー2
+  responsibilities:
+    - 作業実行
+    - 完了報告
+  session: multiagent
+  pane: 2
+
+worker3:
+  role: ワーカー3
+  responsibilities:
+    - 作業実行
+    - 完了報告
+  session: multiagent
+  pane: 3
 ```
 
 **tmux構成**:
