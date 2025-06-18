@@ -84,10 +84,81 @@ scenarios:
     description: ソフトウェア開発チームによる協働プログラミングシナリオ
     type: external
     path: scenarios/collaborative-coding
+  market-analysis:
+    name: Market Analysis Session
+    description: 市場調査と競合分析チーム - 包括的な市場動向分析から戦略提案まで
+    tmux_sessions:
+      market_analysis:
+        window_name: market-team
+        panes:
+          - role: market_researcher
+          - role: competitive_analyst
+          - role: consumer_insights
+          - role: trend_analyst
+          - role: business_analyst
+          - role: strategy_consultant
+    agents:
+      market_researcher:
+        role: マーケットリサーチャー
+        session: market_analysis
+        pane: 0
+      competitive_analyst:
+        role: 競合アナリスト
+        session: market_analysis
+        pane: 1
+      consumer_insights:
+        role: コンシューマーインサイト専門家
+        session: market_analysis
+        pane: 2
+      trend_analyst:
+        role: トレンドアナリスト
+        session: market_analysis
+        pane: 3
+      business_analyst:
+        role: ビジネスアナリスト
+        session: market_analysis
+        pane: 4
+      strategy_consultant:
+        role: 戦略コンサルタント
+        session: market_analysis
+        pane: 5
+  product-development:
+    name: Product Development Session
+    description: プロダクト開発チーム - アイデアから市場投入まで包括的な製品開発プロセス
+    tmux_sessions:
+      product_development:
+        window_name: product-team
+        panes:
+          - role: product_manager
+          - role: ux_designer
+          - role: product_marketing_manager
+          - role: system_architect
+          - role: lead_programmer
+    agents:
+      product_manager:
+        role: プロダクトマネージャー
+        session: product_development
+        pane: 0
+      ux_designer:
+        role: UXデザイナー
+        session: product_development
+        pane: 1
+      product_marketing_manager:
+        role: プロダクトマーケティングマネージャー
+        session: product_development
+        pane: 2
+      system_architect:
+        role: システムアーキテクト
+        session: product_development
+        pane: 3
+      lead_programmer:
+        role: リードプログラマー
+        session: product_development
+        pane: 4
 settings:
   tmuxPrefix: C-b
   autoStartClaude: true
   logLevel: info
   colorOutput: true
 createdAt: '2025-06-15T13:14:16.500Z'
-lastUpdated: '2025-06-16T16:49:26.773Z'
+lastUpdated: '2025-06-17T15:37:56.419Z'

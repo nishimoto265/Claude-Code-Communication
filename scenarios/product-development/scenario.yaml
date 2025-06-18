@@ -1,0 +1,15 @@
+name: Product Development Session
+description: プロダクト開発チーム - アイデアから市場投入まで包括的な製品開発プロセス
+version: 2.0.0
+author: Claude Agents
+tags:
+  - product
+  - development
+  - innovation
+  - design
+  - technical
+initial_message: あなたはプロダクトマネージャーです。新製品の開発プロジェクトを開始してください。市場機会、ユーザーニーズ、技術要件、マーケティング戦略について各専門家と連携して製品開発を進めてください。
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.3
+  enable_logging: true

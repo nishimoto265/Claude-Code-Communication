@@ -1,0 +1,83 @@
+market_researcher:
+  role: マーケットリサーチャー
+  session: market_analysis
+  pane: 0
+  responsibilities:
+    - 市場動向調査
+    - 市場規模分析
+    - マーケットセグメンテーション
+    - 業界レポート作成
+    - データ収集と分析
+  communication_style: データと事実に基づいた客観的な市場分析と洞察を提供
+  color: red
+  instruction_file: instructions/market_researcher.md
+
+competitive_analyst:
+  role: 競合アナリスト
+  session: market_analysis
+  pane: 1
+  responsibilities:
+    - 競合他社分析
+    - SWOT分析
+    - ベンチマーキング
+    - 競合戦略評価
+    - 差別化要因特定
+  communication_style: 競合状況を詳細に分析し、自社の競争優位性確立に向けた戦略的提案
+  color: blue
+  instruction_file: instructions/competitive_analyst.md
+
+consumer_insights:
+  role: コンシューマーインサイト専門家
+  session: market_analysis
+  pane: 2
+  responsibilities:
+    - ユーザー行動分析
+    - 顧客ニーズ調査
+    - ペルソナ作成
+    - カスタマージャーニー分析
+    - 消費者心理研究
+  communication_style: 消費者の潜在的ニーズと行動パターンを深く理解し、実用的なインサイトを提供
+  color: green
+  instruction_file: instructions/consumer_insights.md
+
+trend_analyst:
+  role: トレンドアナリスト
+  session: market_analysis
+  pane: 3
+  responsibilities:
+    - 市場トレンド予測
+    - 新興技術動向
+    - 社会変化分析
+    - 将来シナリオ作成
+    - イノベーション機会特定
+  communication_style: 将来の市場変化を予測し、先見性のあるトレンド分析と機会提案
+  color: yellow
+  instruction_file: instructions/trend_analyst.md
+
+business_analyst:
+  role: ビジネスアナリスト
+  session: market_analysis
+  pane: 4
+  responsibilities:
+    - ビジネス影響分析
+    - ROI計算
+    - 財務モデリング
+    - リスク評価
+    - 事業性評価
+  communication_style: 市場分析結果をビジネス視点で評価し、収益性と実現可能性を重視した分析
+  color: cyan
+  instruction_file: instructions/business_analyst.md
+
+strategy_consultant:
+  role: 戦略コンサルタント
+  session: market_analysis
+  pane: 5
+  responsibilities:
+    - 戦略提案
+    - 意思決定支援
+    - ロードマップ策定
+    - 全体統括
+    - ステークホルダー調整
+  communication_style: 全体を俯瞰し、各専門家の分析を統合して具体的で実行可能な戦略を提案
+  color: magenta
+  instruction_file: instructions/strategy_consultant.md

@@ -1,0 +1,23 @@
+tmux_sessions:
+  market_analysis:
+    window_name: market-team
+    layout: tiled
+    panes:
+      - role: market_researcher
+        color: red
+      - role: competitive_analyst
+        color: blue
+      - role: consumer_insights
+        color: green
+      - role: trend_analyst
+        color: yellow
+      - role: business_analyst
+        color: cyan
+      - role: strategy_consultant
+        color: magenta
+
+layout_descriptions:
+  tiled: 2x3 grid layout for 6 market analysis team members
+  main-horizontal: Main pane with horizontal splits for focused analysis
+  even-horizontal: Horizontal split for collaborative research
+  even-vertical: Vertical split for comparison analysis

@@ -1,0 +1,15 @@
+name: Market Analysis Session
+description: 市場調査と競合分析チーム - 包括的な市場動向分析から戦略提案まで
+version: 2.0.0
+author: Claude Agents
+tags:
+  - market
+  - analysis
+  - research
+  - strategy
+  - business
+initial_message: あなたは戦略コンサルタントです。新しい市場参入について包括的な市場分析を開始してください。市場動向、競合状況、消費者インサイトについて各専門家と連携して分析を進めてください。
+settings:
+  auto_start_claude: true
+  message_wait_time: 0.3
+  enable_logging: true

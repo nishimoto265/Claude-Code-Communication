@@ -1,0 +1,21 @@
+tmux_sessions:
+  product_development:
+    window_name: product-team
+    layout: main-horizontal
+    panes:
+      - role: product_manager
+        color: red
+      - role: ux_designer
+        color: blue
+      - role: product_marketing_manager
+        color: green
+      - role: system_architect
+        color: yellow
+      - role: lead_programmer
+        color: cyan
+
+layout_descriptions:
+  main-horizontal: Main pane at top with 4 smaller panes below for 5-member product development team
+  tiled: Alternative 2x3 grid layout (one empty slot)
+  even-horizontal: Equal horizontal splits for collaborative development
+  even-vertical: Equal vertical splits for parallel workstreams

@@ -7,8 +7,9 @@ NPMパッケージ化されたエンタープライズグレードのマルチ�
 現実的なビジネスシナリオでAIエージェント間の協働を体験できます：
 
 - 💼 **Business Strategy**: CEO、CTO、CFO、CMOによる戦略会議
-- 💻 **Collaborative Coding**: CTO, アーキテクト、フロントエンド、バックエンド開発者の連携
-- 📈 **Market Analysis**: リサーチャー、アナリストによる競合調査
+- 💻 **Collaborative Coding**: テックリード、フロントエンド、バックエンド、DevOps、QA、プロダクトオーナーの連携
+- 📊 **Market Analysis**: マーケットリサーチャー、競合アナリスト、消費者インサイト専門家による市場分析
+- 🚀 **Product Development**: プロダクトマネージャー、UXデザイナー、システムアーキテクトによる製品開発
 - 🎉 **Hello World**: 基本的なマルチエージェントデモ
 
 ## 📦 インストール
@@ -109,7 +110,8 @@ claude-agents start
 |---------|------|--------|---------|
 | `business-strategy` | 事業戦略ディスカッション | 6エージェント | strategy(4) + analysis(2) |
 | `collaborative-coding` | 共同コーディング | 6エージェント | development(6) |
-| `market-analysis` | 市場分析・競合調査 | 6エージェント | research(6) |
+| `market-analysis` | 市場分析・競合調査 | 6エージェント | market_analysis(6) |
+| `product-development` | プロダクト開発 | 5エージェント | product_development(5) |
 | `hello-world` | 基本デモ | 5エージェント | president(1) + multiagent(4) |
 
 ### シナリオ操作
@@ -399,6 +401,40 @@ tmux attach-session -t analysis
 └─────────────┴─────────────┘
 ```
 
+### Market Analysis シナリオ
+
+```bash
+# 市場分析チーム（6ペイン表示）
+tmux attach-session -t market_analysis
+```
+
+**画面レイアウト（market_analysis セッション）:**
+```
+┌─────────────┬─────────────┬─────────────┐
+│ リサーチャー │ 競合アナリスト │ インサイト専門 │
+├─────────────┼─────────────┼─────────────┤
+│ トレンド分析 │ ビジネス分析 │ 戦略コンサル │
+└─────────────┴─────────────┴─────────────┘
+```
+
+### Product Development シナリオ
+
+```bash
+# プロダクト開発チーム（5ペイン表示）
+tmux attach-session -t product_development
+```
+
+**画面レイアウト（product_development セッション）:**
+```
+┌─────────────────┬─────────────────┐
+│ プロダクトマネージャー │ UXデザイナー      │
+├─────────────────┼─────────────────┤
+│ マーケティング     │ システムアーキテクト │
+├─────────────────┼─────────────────┤
+│ リードプログラマー │                 │
+└─────────────────┴─────────────────┘
+```
+
 ### Hello World シナリオ
 
 ```bash
@@ -478,6 +514,54 @@ claude-agents send data_analyst "競合分析の詳細データを提供して�
 claude-agents send president "Hello World プロジェクトを開始してください"
 claude-agents send boss1 "worker達に作業を指示してください"
 claude-agents send worker1 "Hello World作業を実行してください"
+```
+
+### Market Analysis シナリオ
+
+**戦略コンサルタントペイン（market_analysis セッション右下）で実行：**
+```
+あなたは戦略コンサルタントです。新しい市場参入について包括的な市場分析を開始してください。市場動向、競合状況、消費者インサイトについて各専門家と連携して分析を進めてください。
+```
+
+💡 **期待される動作**:
+- 戦略コンサルタントが分析テーマを提示
+- マーケットリサーチャーが市場規模・成長率を分析
+- 競合アナリストが競合他社の戦略を評価
+- 消費者インサイト専門家がユーザーニーズを分析
+- トレンドアナリストが将来動向を予測
+- ビジネスアナリストが事業性を評価
+
+**エージェント間メッセージ送信例：**
+```bash
+# 戦略コンサルタントから各専門家への指示
+claude-agents send market_researcher "ターゲット市場の規模と成長率を調査してください"
+claude-agents send competitive_analyst "主要競合3社のSWOT分析をお願いします"
+claude-agents send consumer_insights "ユーザーペルソナとニーズを分析してください"
+claude-agents send trend_analyst "5年後の市場予測を立ててください"
+claude-agents send business_analyst "投資対効果とリスク評価をしてください"
+```
+
+### Product Development シナリオ
+
+**プロダクトマネージャーペイン（product_development セッション左上）で実行：**
+```
+あなたはプロダクトマネージャーです。新製品の開発プロジェクトを開始してください。市場機会、ユーザーニーズ、技術要件、マーケティング戦略について各専門家と連携して製品開発を進めてください。
+```
+
+💡 **期待される動作**:
+- プロダクトマネージャーが製品ビジョンを提示
+- UXデザイナーがユーザー体験を設計
+- プロダクトマーケティングマネージャーが市場ポジショニングを策定
+- システムアーキテクトが技術アーキテクチャを設計
+- リードプログラマーが実装計画を立案
+
+**エージェント間メッセージ送信例：**
+```bash
+# プロダクトマネージャーから各専門家への指示
+claude-agents send ux_designer "ユーザージャーニーマップを作成してください"
+claude-agents send product_marketing_manager "競合分析と差別化戦略を検討してください"
+claude-agents send system_architect "スケーラブルなアーキテクチャを設計してください"
+claude-agents send lead_programmer "技術的実現可能性と開発工数を評価してください"
 ```
 
 ## 📁 設定ファイル
@@ -739,6 +823,12 @@ claude-agents status --agents
 # 実行中にシナリオ切り替え
 claude-agents switch collaborative-coding
 
+# 市場分析シナリオに切り替え
+claude-agents switch market-analysis
+
+# 製品開発シナリオに切り替え
+claude-agents switch product-development
+
 # または完全リセットして新規構築
 claude-agents reset
 claude-agents init --scenario market-analysis
@@ -762,6 +852,18 @@ claude-agents list --detailed
 #    エージェント: 6個
 #    セッション: 2個
 #    主要エージェント: ceo, cto, cfo
+#
+# 📊 market-analysis
+#    市場調査と競合分析チーム
+#    エージェント: 6個
+#    セッション: 1個
+#    主要エージェント: market_researcher, competitive_analyst, consumer_insights
+#
+# 🚀 product-development
+#    プロダクト開発チーム
+#    エージェント: 5個
+#    セッション: 1個
+#    主要エージェント: product_manager, ux_designer, product_marketing_manager
 ```
 
 ## ⚠️ トラブルシューティング
@@ -857,7 +959,15 @@ claude-agents start
 ```bash
 claude-agents init --scenario market-analysis
 claude-agents start
-# 市場調査、競合分析、消費者インサイト、トレンド分析、ビジネスアナリスト
+# マーケットリサーチャー、競合アナリスト、消費者インサイト専門家、トレンドアナリスト、ビジネスアナリスト、戦略コンサルタント
+```
+
+### シーン4: 新製品開発プロジェクト
+
+```bash
+claude-agents init --scenario product-development
+claude-agents start
+# プロダクトマネージャー、UXデザイナー、プロダクトマーケティングマネージャー、システムアーキテクト、リードプログラマー
 ```
 
 ## 📊 期待される成果
