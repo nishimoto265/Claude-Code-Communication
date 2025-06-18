@@ -29,7 +29,7 @@ claude-agents start business-strategy
 
 ```bash
 git clone https://github.com/your-repo/claude-agents.git
-cd CC-ProductManagement
+cd claude-agents
 npm install
 node bin/claude-agents.js init
 ```
@@ -319,7 +319,7 @@ scenarios:
 ```
 scenarios/
 ├── healthcare-consultation/    # 医療相談チーム
-├── legal-review/              # 法務レビューチーム  
+├── legal-review/              # 法務レビューチーム
 ├── financial-planning/        # 金融プランニング
 ├── education-curriculum/      # 教育カリキュラム設計
 └── marketing-campaign/        # マーケティングキャンペーン
@@ -331,19 +331,19 @@ scenarios/
 tmux_sessions:
   core-dev:
     window_name: core-development
-    panes: 
+    panes:
       - role: tech_lead
       - role: senior_dev1
       - role: senior_dev2
   frontend-team:
-    window_name: frontend-team  
-    panes: 
+    window_name: frontend-team
+    panes:
       - role: frontend_lead
       - role: ui_designer
       - role: qa_engineer
   backend-team:
     window_name: backend-team
-    panes: 
+    panes:
       - role: backend_lead
       - role: devops
       - role: database_admin

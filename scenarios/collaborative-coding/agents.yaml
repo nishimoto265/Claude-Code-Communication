@@ -1,83 +1,77 @@
-tech_lead:
-  role: テックリード
+cto:
+  role: CTO
   session: development
   pane: 0
   responsibilities:
-    - アーキテクチャ設計
-    - 技術的課題解決
-    - コードレビュー
-    - 技術選定
-    - チーム技術指導
-  communication_style: 技術的な根拠とベストプラクティスに基づいた判断を行い、チーム全体の技術レベル向上を促進
+    - 実装方針・設計の経営的レビュー
+    - 技術戦略の最終責任
+    - 技術投資判断
+    - 開発プロセス統括
+  communication_style: 経営的視点で技術戦略を評価し、長期的な技術ビジョンに基づいた意思決定
   color: red
-  instruction_file: instructions/tech_lead.md
+  instruction_file: instructions/cto.md
 
-frontend_dev:
-  role: フロントエンド開発者
+engineering_manager:
+  role: エンジニアリングマネージャー
   session: development
   pane: 1
   responsibilities:
-    - UI/UX実装
-    - フロントエンド設計
-    - ユーザビリティ改善
-    - レスポンシブデザイン
-    - パフォーマンス最適化
-  communication_style: ユーザー体験を重視し、使いやすさと技術的実現性のバランスを考慮した提案
+    - エンジニアの目標設定
+    - メンタルマネジメント
+    - チームパフォーマンス最大化
+    - 人材育成・評価
+  communication_style: エンジニアが最大パフォーマンスを発揮できるよう支援し、チーム全体の生産性向上を図る
   color: blue
-  instruction_file: instructions/frontend_dev.md
+  instruction_file: instructions/engineering_manager.md
 
-backend_dev:
-  role: バックエンド開発者
+tech_lead:
+  role: テックリード
   session: development
   pane: 2
   responsibilities:
-    - API設計・実装
-    - データベース設計
-    - パフォーマンス最適化
-    - セキュリティ実装
-    - システム統合
-  communication_style: スケーラビリティとセキュリティを重視した堅牢なシステム設計の提案
+    - 技術プロジェクトリーダー
+    - 実装参加
+    - 技術的な意思決定
+    - アーキテクチャ設計
+  communication_style: 技術プロジェクトを主導し、実装者として実際にコードを書きながら技術的リーダーシップを発揮
   color: green
-  instruction_file: instructions/backend_dev.md
+  instruction_file: instructions/tech_lead.md
 
-devops:
-  role: DevOpsエンジニア
+engineer1:
+  role: エンジニア1
   session: development
   pane: 3
   responsibilities:
-    - インフラ管理
-    - CI/CD構築
-    - 運用監視
-    - 自動化推進
-    - セキュリティ対策
-  communication_style: 開発効率と運用安定性を両立させるインフラストラクチャの提案
+    - プログラマとして実装
+    - コードレビュー
+    - 技術課題解決
+    - 単体テスト実装
+  communication_style: 実装経験に基づいた具体的な技術提案と、効率的で品質の高いコード実装
   color: yellow
-  instruction_file: instructions/devops.md
+  instruction_file: instructions/engineer1.md
 
-qa_engineer:
-  role: QAエンジニア
+engineer2:
+  role: エンジニア2
   session: development
   pane: 4
   responsibilities:
-    - テスト設計
-    - 品質管理
-    - バグ検証
-    - テスト自動化
-    - 品質メトリクス分析
-  communication_style: 品質第一の観点から潜在的な問題を指摘し、テスト戦略を提案
+    - プログラマとして実装
+    - コードレビュー
+    - 技術課題解決
+    - 統合テスト実装
+  communication_style: 実装経験に基づいた具体的な技術提案と、効率的で品質の高いコード実装
   color: cyan
-  instruction_file: instructions/qa_engineer.md
+  instruction_file: instructions/engineer2.md
 
-product_owner:
-  role: プロダクトオーナー
+engineer3:
+  role: エンジニア3
   session: development
   pane: 5
   responsibilities:
-    - 要件定義
-    - 優先順位決定
-    - ユーザーストーリー作成
-    - ステークホルダー調整
-    - 受け入れ基準定義
-  communication_style: ビジネス価値と技術的制約のバランスを考慮した現実的な要件定義
+    - プログラマとして実装
+    - コードレビュー
+    - 技術課題解決
+    - E2Eテスト実装
+  communication_style: 実装経験に基づいた具体的な技術提案と、効率的で品質の高いコード実装
   color: magenta
-  instruction_file: instructions/product_owner.md
+  instruction_file: instructions/engineer3.md

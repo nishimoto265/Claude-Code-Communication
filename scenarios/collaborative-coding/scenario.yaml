@@ -7,7 +7,7 @@ tags:
   - technical
   - agile
   - development
-initial_message: あなたはテックリードです。新機能の開発について技術的な議論を開始してください。今回のスプリントで実装する機能の概要と技術的な課題について説明してください。
+initial_message: あなたはCTOです。新機能の開発について技術戦略の観点から議論を開始してください。実装方針、設計レビュー、技術的課題について経営的な視点で評価してください。
 settings:
   auto_start_claude: true
   message_wait_time: 0.3
