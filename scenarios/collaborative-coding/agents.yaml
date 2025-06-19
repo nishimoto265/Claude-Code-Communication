@@ -7,71 +7,51 @@ cto:
     - 技術戦略の最終責任
     - 技術投資判断
     - 開発プロセス統括
-  communication_style: 経営的視点で技術戦略を評価し、長期的な技術ビジョンに基づいた意思決定
-  color: red
-  instruction_file: instructions/cto.md
-
-engineering_manager:
-  role: エンジニアリングマネージャー
-  session: development
-  pane: 1
-  responsibilities:
     - エンジニアの目標設定
-    - メンタルマネジメント
     - チームパフォーマンス最大化
     - 人材育成・評価
-  communication_style: エンジニアが最大パフォーマンスを発揮できるよう支援し、チーム全体の生産性向上を図る
-  color: blue
-  instruction_file: instructions/engineering_manager.md
+  communication_style: 経営的視点で技術戦略を評価し、長期的な技術ビジョンに基づいた意思決定を行いながら、チーム全体の成長を促進
+  color: red
+  instruction_file: instructions/cto.md
 
 tech_lead:
   role: テックリード
   session: development
-  pane: 2
+  pane: 1
   responsibilities:
     - 技術プロジェクトリーダー
     - 実装参加
     - 技術的な意思決定
     - アーキテクチャ設計
-  communication_style: 技術プロジェクトを主導し、実装者として実際にコードを書きながら技術的リーダーシップを発揮
-  color: green
+    - メンタルマネジメント
+    - 日々のチームサポート
+    - 1on1実施
+  communication_style: 技術プロジェクトを主導し、実装者として実際にコードを書きながら技術的リーダーシップを発揮し、チームメンバーの成長を支援
+  color: blue
   instruction_file: instructions/tech_lead.md
 
 engineer1:
   role: エンジニア1
   session: development
-  pane: 3
+  pane: 2
   responsibilities:
     - プログラマとして実装
     - コードレビュー
     - 技術課題解決
     - 単体テスト実装
   communication_style: 実装経験に基づいた具体的な技術提案と、効率的で品質の高いコード実装
-  color: yellow
+  color: green
   instruction_file: instructions/engineer1.md
 
 engineer2:
   role: エンジニア2
   session: development
-  pane: 4
+  pane: 3
   responsibilities:
     - プログラマとして実装
     - コードレビュー
     - 技術課題解決
     - 統合テスト実装
   communication_style: 実装経験に基づいた具体的な技術提案と、効率的で品質の高いコード実装
-  color: cyan
+  color: yellow
   instruction_file: instructions/engineer2.md
-
-engineer3:
-  role: エンジニア3
-  session: development
-  pane: 5
-  responsibilities:
-    - プログラマとして実装
-    - コードレビュー
-    - 技術課題解決
-    - E2Eテスト実装
-  communication_style: 実装経験に基づいた具体的な技術提案と、効率的で品質の高いコード実装
-  color: magenta
-  instruction_file: instructions/engineer3.md

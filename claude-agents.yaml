@@ -1,5 +1,5 @@
 version: 2.0.0
-currentScenario: business-strategy
+currentScenario: collaborative-coding
 projectName: CC-ProductManagement
 scenarios:
   hello-world:
@@ -87,11 +87,9 @@ scenarios:
         window_name: dev-team
         panes:
           - role: cto
-          - role: engineering_manager
           - role: tech_lead
           - role: engineer1
           - role: engineer2
-          - role: engineer3
     agents:
       cto:
         role: CTO
@@ -101,46 +99,38 @@ scenarios:
           - 実装方針・設計の経営的レビュー
           - 技術戦略の最終責任
           - 技術投資判断
-      engineering_manager:
-        role: エンジニアリングマネージャー
-        session: development
-        pane: 1
-        responsibilities:
           - エンジニアの目標設定
-          - メンタルマネジメント
           - チームパフォーマンス最大化
+          - 人材育成・評価
       tech_lead:
         role: テックリード
         session: development
-        pane: 2
+        pane: 1
         responsibilities:
           - 技術プロジェクトリーダー
           - 実装参加
           - 技術的な意思決定
+          - メンタルマネジメント
+          - 日々のチームサポート
+          - 1on1実施
       engineer1:
         role: エンジニア1
+        session: development
+        pane: 2
+        responsibilities:
+          - プログラマとして実装
+          - コードレビュー
+          - 技術課題解決
+          - 単体テスト実装
+      engineer2:
+        role: エンジニア2
         session: development
         pane: 3
         responsibilities:
           - プログラマとして実装
           - コードレビュー
           - 技術課題解決
-      engineer2:
-        role: エンジニア2
-        session: development
-        pane: 4
-        responsibilities:
-          - プログラマとして実装
-          - コードレビュー
-          - 技術課題解決
-      engineer3:
-        role: エンジニア3
-        session: development
-        pane: 5
-        responsibilities:
-          - プログラマとして実装
-          - コードレビュー
-          - 技術課題解決
+          - 統合テスト実装
   market-analysis:
     name: Market Analysis Session
     description: 市場調査と競合分析チーム - 包括的な市場動向分析から戦略提案まで
@@ -218,4 +208,4 @@ settings:
   logLevel: info
   colorOutput: true
 createdAt: '2025-06-18T05:58:16.924Z'
-lastUpdated: '2025-06-18T05:58:16.925Z'
+lastUpdated: '2025-06-19T01:21:09.760Z'
