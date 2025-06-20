@@ -16,6 +16,7 @@ const switchCommand = require('../lib/commands/switch');
 const sendCommand = require('../lib/commands/send');
 const statusCommand = require('../lib/commands/status');
 const createScenarioCommand = require('../lib/commands/create-scenario');
+const autoCommand = require('../lib/commands/auto');
 
 const program = new Command();
 
@@ -97,6 +98,14 @@ program
   .option('--initial-message <message>', 'initial message for scenario')
   .action(createScenarioCommand);
 
+program
+  .command('auto')
+  .description('Enable agent automation system')
+  .option('-i, --interval <seconds>', 'check interval in seconds', '30')
+  .option('-m, --mode <mode>', 'automation mode (development/production)', 'development')
+  .option('-d, --daemon', 'run in daemon mode with continuous monitoring')
+  .action(autoCommand);
+
 // Help customization
 program.on('--help', () => {
   console.log('');
@@ -106,6 +115,7 @@ program.on('--help', () => {
   console.log('  $ claude-agents send ceo "Hello"         Send message to CEO agent');
   console.log('  $ claude-agents switch market-analysis   Switch to market analysis');
   console.log('  $ claude-agents create-scenario          Create new custom scenario');
+  console.log('  $ claude-agents auto --interval 30       Enable automation (30s interval)');
   console.log('  $ claude-agents status                   Show current status');
   console.log('');
   console.log(chalk.cyan('Quick Start:'));

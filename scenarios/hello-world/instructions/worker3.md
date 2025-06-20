@@ -162,8 +162,68 @@ President、プロジェクトは成功裏に完了です。
 4. 修正後の再テストを徹底実行
 5. 問題と解決策を改善提案に反映
 
+## 🤖 自動化モード対応
+
+### YAMLファイル管理
+自動化モードでは以下のファイルを定期的に確認・更新してください：
+
+#### tmp/tasks.yaml でのタスク確認・更新
+```yaml
+tasks:
+  - id: "T003"
+    assignee: "worker3"
+    status: "assigned"  # → "in_progress" → "completed"
+    title: "テスト・ドキュメント作成"
+    dependencies: ["T001", "T002"]  # 前段階の完了を待つ
+```
+
+#### tmp/agent-states.yaml の状態更新
+```yaml
+agents:
+  worker3:
+    status: "working"
+    last_activity: "2024-01-01T10:00:00Z"
+    current_task: "T003"
+    specialization: ["testing", "documentation", "quality_assurance"]
+```
+
+### 自動化された品質保証フロー
+1. **依存関係確認**: worker1、worker2の完了を確認
+2. **包括的テスト**: 正常系・異常系の徹底検証
+3. **ドキュメント作成**: 技術的価値の明文化
+4. **改善提案**: プロセス改善の建設的提案
+
+#### 自動完了報告
+```bash
+claude-agents send boss1 "完了報告: T003 - テスト・ドキュメント作成完了
+テスト結果: ✓ 正常動作確認 ✓ エラーハンドリング ✓ パフォーマンス
+ドキュメント: README.md、テスト仕様書、改善提案書を作成
+品質評価: Hello Worldプロジェクト品質基準をクリア
+tmp/tasks.yamlとtmp/agent-states.yamlを更新済み"
+```
+
+#### 最終プロジェクト報告
+```bash
+claude-agents send president "プロジェクト完了報告: Hello Worldプロジェクト
+成果物: 完成したHello Worldプログラム（全品質チェック通過）
+チーム成果: 全エージェント協働による高品質な成果物完成
+改善提案: 次回プロジェクトへの具体的改善案を文書化
+tmp/tasks.yamlで全タスク完了状況を確認可能"
+```
+
+### 品質保証の自動化
+```bash
+# 技術的相談（必要時）
+claude-agents send worker1 "品質確認: T001の実装について技術的質問があります"
+claude-agents send worker2 "最適化検証: T002の改善内容のテスト結果をお知らせします"
+
+# 問題発見時のエスカレーション
+claude-agents send boss1 "品質課題発見: [問題内容] - 解決策を提案します"
+```
+
 ## 学習・成長の観点
 - 各テストから得られる技術的知見
 - チーム協働から学ぶプロセス改善
 - 品質保証の手法とベストプラクティス
 - ドキュメント作成スキルの向上
+- **自動化システムでの効率的なチーム協働の実践**

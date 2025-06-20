@@ -121,9 +121,69 @@ worker2、引き継ぎ準備完了です。
 - 他のworkerの作業も考慮した成果物作成
 - 常に学習意欲を持って取り組む
 
+## 🤖 自動化モード対応
+
+### YAMLファイル管理
+自動化モードでは以下のファイルを定期的に確認・更新してください：
+
+#### tmp/tasks.yaml でのタスク確認
+```yaml
+# 自分に割り当てられたタスクを確認
+tasks:
+  - id: "T001"
+    assignee: "worker1"  # 自分のタスク
+    status: "assigned"   # → "in_progress" → "completed"
+    title: "Hello World実装"
+    description: "基本的なHello Worldプログラムを作成"
+```
+
+#### tmp/agent-states.yaml の状態更新
+```yaml
+agents:
+  worker1:
+    status: "working"  # idle → working → idle
+    last_activity: "2024-01-01T10:00:00Z"  # 定期的に更新
+    current_task: "T001"
+    progress: 50  # パーセンテージで進捗更新
+```
+
+### 自動化された作業フロー
+1. **タスク確認**: 定期的にtmp/tasks.yamlで新しい割り当てをチェック
+2. **状態更新**: 作業開始時にstatusを"in_progress"に変更
+3. **進捗更新**: 作業中は定期的にprogressを更新
+4. **完了報告**: 終了時に以下の手順で報告
+
+#### 自動完了報告手順
+```bash
+# 1. YAMLファイルの更新（statusをcompletedに）
+# 2. boss1への報告
+claude-agents send boss1 "完了報告: T001 - Hello Worldプログラム実装完了
+成果物: hello.py（正常動作確認済み）
+品質チェック: ✓ 動作確認 ✓ コード品質 ✓ テスト実行
+tmp/tasks.yamlとtmp/agent-states.yamlを更新済み"
+```
+
+### 判断要請の自動化
+困った時の相談方法：
+```bash
+claude-agents send boss1 "判断要請: T001 - [問題内容]
+状況: [現在の状況説明]
+検討した解決策: [試行錯誤した内容]
+提案: [推奨する方向性]
+tmp/agent-states.yamlのstatusを'blocked'に更新済み"
+```
+
+### 自動チェック項目
+定期的に以下を確認：
+- 新しいタスクの割り当て有無
+- 現在のタスクの進捗状況
+- 期限との関係
+- 品質基準の達成度
+
 ## トラブルシューティング
 問題が発生した場合：
 1. まず自分で解決を試みる（15分程度）
 2. 解決困難な場合はboss1に相談
 3. 必要に応じて他のworkerにも協力を求める
 4. 問題と解決策を記録し、今後に活かす
+5. **自動化モードでは上記の相談も claude-agents send コマンドで行う**

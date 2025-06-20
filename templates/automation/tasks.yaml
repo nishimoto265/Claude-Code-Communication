@@ -1,0 +1,49 @@
+# タスク管理ファイル
+# このファイルは自動化システムによって管理されます
+
+metadata:
+  version: "1.0.0"
+  created: null
+  last_updated: null
+  scenario: null
+
+tasks:
+  # タスクリスト（動的に更新される）
+  # - id: "T001"
+  #   title: "サンプルタスク"
+  #   description: "タスクの詳細説明"
+  #   status: "pending"  # pending, assigned, in_progress, completed, blocked
+  #   assignee: null     # エージェント名
+  #   created: "2024-01-01T10:00:00Z"
+  #   assigned: null
+  #   deadline: null
+  #   priority: "medium" # high, medium, low
+  #   dependencies: []   # 依存タスクのID
+  #   tags: []
+
+workflow:
+  current_step: "initial"
+  next_check: null
+  automation_enabled: false
+  
+  steps:
+    - name: "initial"
+      description: "初期状態"
+    - name: "task_created"
+      description: "タスク作成済み"
+    - name: "task_assigned"
+      description: "タスク割り当て済み"
+    - name: "in_progress"
+      description: "実行中"
+    - name: "review"
+      description: "レビュー中"
+    - name: "completed"
+      description: "完了"
+
+statistics:
+  total_tasks: 0
+  pending_tasks: 0
+  assigned_tasks: 0
+  in_progress_tasks: 0
+  completed_tasks: 0
+  blocked_tasks: 0

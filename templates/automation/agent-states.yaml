@@ -1,0 +1,67 @@
+# エージェント状態管理ファイル
+# このファイルは各エージェントの活動状況を追跡します
+
+metadata:
+  version: "1.0.0"
+  scenario: null
+  last_updated: null
+
+agents:
+  # エージェント状態（シナリオによって動的に設定される）
+  # president:
+  #   status: "monitoring"     # monitoring, idle, working, blocked
+  #   last_activity: null
+  #   current_focus: null
+  #   assigned_tasks: []
+  #   completed_tasks: []
+  #   performance:
+  #     tasks_completed: 0
+  #     average_response_time: 0
+  #     success_rate: 0.0
+  #   
+  # boss1:
+  #   status: "managing"
+  #   last_activity: null
+  #   current_focus: "task_assignment"
+  #   assigned_tasks: []
+  #   completed_tasks: []
+  #   team_members: ["worker1", "worker2", "worker3"]
+  #   performance:
+  #     tasks_completed: 0
+  #     team_efficiency: 0.0
+  #     average_response_time: 0
+  #
+  # worker1:
+  #   status: "idle"
+  #   last_activity: null
+  #   current_task: null
+  #   assigned_tasks: []
+  #   completed_tasks: []
+  #   specialization: []
+  #   performance:
+  #     tasks_completed: 0
+  #     average_completion_time: 0
+  #     quality_score: 0.0
+
+communication:
+  last_broadcast: null
+  pending_messages: []
+  escalations: []
+
+automation:
+  enabled: false
+  check_interval: 30  # seconds
+  last_check: null
+  alerts:
+    inactive_threshold: 300  # 5 minutes
+    stale_task_threshold: 1800  # 30 minutes
+    
+monitoring:
+  health_check:
+    all_agents_responsive: true
+    last_health_check: null
+  
+  performance:
+    overall_efficiency: 0.0
+    bottlenecks: []
+    recommendations: []

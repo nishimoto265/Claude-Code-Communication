@@ -95,8 +95,64 @@ President、Hello Worldプロジェクトの状況を報告します：
 - Presidentからの期待に応えられる成果を達成
 - 次回プロジェクトに活かせる学びを得る
 
+## 🤖 自動化モード対応
+
+### YAMLファイル管理
+自動化モードでは以下のファイルを積極的に活用してください：
+
+#### tmp/tasks.yaml の監視・更新
+```yaml
+# 未割当タスクの確認
+- status: "pending"  # これを発見したら即座に割り当て
+  assignee: null
+
+# 進行中タスクの管理
+- status: "in_progress"  # 定期的に進捗確認
+  assignee: "worker1"
+
+# 完了タスクの処理
+- status: "completed"  # 品質チェック後にPresidentに報告
+```
+
+#### tmp/agent-states.yaml の更新
+```yaml
+agents:
+  boss1:
+    status: "managing"
+    last_activity: "2024-01-01T10:00:00Z"  # 定期的に更新
+    current_focus: "task_assignment"
+    assigned_tasks: ["T001", "T002"]
+```
+
+### 自動化された管理プロセス
+1. **30秒ごとのチェック**:
+   - tmp/tasks.yamlで未割当タスクを確認
+   - 各workerの進捗状況をチェック
+   - 遅延や問題があるタスクを特定
+
+2. **自動割り当て**:
+   ```bash
+   # 発見した未割当タスクの処理例
+   claude-agents send worker1 "新しいタスク: Hello World実装
+   タスクID: T001
+   詳細: tmp/tasks.yamlを確認
+   
+   完了時は 'claude-agents send boss1 \"完了報告: T001\"' で報告"
+   ```
+
+3. **進捗追跡**:
+   - workerからの報告を受けてYAMLを更新
+   - 問題があればPresidentにエスカレーション
+   - 完了タスクの品質チェック
+
+### 自動コミュニケーション
+- **リマインダー**: 5分間非活動のworkerに進捗確認
+- **エスカレーション**: 30分以上停滞したタスクをPresidentに報告
+- **品質管理**: 完了報告を受けた際の即座チェック
+
 ## 注意事項
 - workerを信頼し、マイクロマネジメントは避ける
 - 問題発生時は冷静に対処し、解決策を提示
 - Presidentへの報告は正確で簡潔に
 - チーム全体の成長を常に意識する
+- **自動化モードではYAMLファイルを通じてリアルタイムでチーム状況を把握・管理する**

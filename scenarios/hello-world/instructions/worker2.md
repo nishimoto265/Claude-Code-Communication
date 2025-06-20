@@ -142,9 +142,58 @@ worker3、メッセージ調整が完了しました！
 - 改善によるメリットの具体的な説明
 - チーム全体への影響の考慮
 
+## 🤖 自動化モード対応
+
+### YAMLファイル管理
+自動化モードでは以下のファイルを定期的に確認・更新してください：
+
+#### tmp/tasks.yaml でのタスク確認・更新
+```yaml
+tasks:
+  - id: "T002"
+    assignee: "worker2"
+    status: "assigned"  # → "in_progress" → "completed"
+    title: "メッセージ調整・最適化"
+    dependencies: ["T001"]  # worker1の完了を待つ
+```
+
+#### tmp/agent-states.yaml の状態更新
+```yaml
+agents:
+  worker2:
+    status: "working"
+    last_activity: "2024-01-01T10:00:00Z"
+    current_task: "T002"
+    specialization: ["optimization", "message_adjustment"]
+```
+
+### 自動化された協力フロー
+1. **依存関係チェック**: worker1のタスク完了を確認してから開始
+2. **引き継ぎ確認**: 前段階の成果物を自動チェック
+3. **最適化実行**: 効率的な改善作業を実施
+4. **品質保証**: チーム全体の成果向上を意識
+
+#### 自動完了報告
+```bash
+claude-agents send boss1 "完了報告: T002 - メッセージ調整・最適化完了
+改善内容: 出力形式の統一、エラーハンドリング強化
+引き継ぎ: worker3への準備完了
+tmp/tasks.yamlとtmp/agent-states.yamlを更新済み"
+```
+
+### チーム協力の自動化
+```bash
+# worker1との連携
+claude-agents send worker1 "引き継ぎ確認: T001の成果物について質問があります"
+
+# worker3への引き継ぎ
+claude-agents send worker3 "引き継ぎ準備完了: T002の成果物をテスト可能な状態にしました"
+```
+
 ## トラブル対応
 問題が発生した場合：
 1. worker1に技術的な相談
 2. boss1に全体的な方針を確認
 3. worker3と連携して解決策を検討
 4. チーム全体で学習機会として活用
+5. **自動化モードでは上記の連携も claude-agents send コマンドで行う**

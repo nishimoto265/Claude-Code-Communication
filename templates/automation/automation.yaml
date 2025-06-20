@@ -1,0 +1,172 @@
+# 自動化設定ファイル
+# エージェント自動化システムの設定と動作ルールを定義します
+
+automation:
+  enabled: false
+  check_interval: 30  # 秒
+  max_parallel_tasks: 5
+  timeout_threshold: 600  # 10分
+  
+  modes:
+    development: true    # 開発モード
+    production: false   # 本番モード
+    debug: false        # デバッグモード
+
+triggers:
+  # メッセージ受信時のトリガー
+  message_received:
+    - condition: "from == 'user'"
+      action: "decompose_task"
+      target: "president"
+      
+    - condition: "contains('判断要請')"
+      action: "escalate"
+      target: "boss1"
+      
+    - condition: "contains('完了報告')"
+      action: "update_status"
+      target: "assigned_agent"
+
+  # タスク状態変更時のトリガー  
+  task_status_changed:
+    - condition: "status == 'pending'"
+      action: "assign_task"
+      target: "boss1"
+      
+    - condition: "status == 'blocked'"
+      action: "escalate_issue"
+      target: "president"
+      
+    - condition: "status == 'completed'"
+      action: "quality_check"
+      target: "boss1"
+
+  # 定期チェックトリガー
+  scheduled_check:
+    - condition: "inactive_agent"
+      action: "send_reminder"
+      threshold: 300  # 5分
+      
+    - condition: "stale_task"
+      action: "escalate_delay"
+      threshold: 1800  # 30分
+
+actions:
+  decompose_task:
+    description: "ユーザーリクエストをタスクに分解"
+    prompt: |
+      以下のリクエストを具体的なタスクに分解してください：
+      {user_request}
+      
+      タスクは以下の形式でtmp/tasks.yamlに追加してください：
+      - id: "T{sequential_number}"
+        title: "タスクタイトル"
+        description: "詳細説明"
+        status: "pending"
+        priority: "medium"
+        estimated_time: "30分"
+        
+  assign_task:
+    description: "未割当タスクを適切なエージェントに割り当て"
+    prompt: |
+      tmp/tasks.yamlから未割当タスク（status: pending）を確認し、
+      適切なエージェントに以下のコマンドで割り当ててください：
+      
+      claude-agents send {agent_name} "新しいタスク: {task_title}
+      詳細: {task_description}
+      期限: {deadline}
+      
+      作業完了時は以下で報告してください：
+      claude-agents send boss1 '完了報告: {task_id}'"
+      
+  send_reminder:
+    description: "非活動エージェントへのリマインダー"
+    prompt: |
+      進捗確認です。現在のタスク状況を報告してください。
+      
+      以下を更新してください：
+      1. tmp/tasks.yamlの進捗状況
+      2. tmp/agent-states.yamlのlast_activity
+      
+      問題があれば遠慮なく相談してください。
+      
+  escalate_issue:
+    description: "問題のエスカレーション"
+    prompt: |
+      問題が発生しているタスクがあります：
+      タスクID: {task_id}
+      問題内容: {issue_description}
+      
+      対応策を検討し、必要に応じて指示を出してください。
+
+workflows:
+  # 基本的なタスク実行フロー
+  basic_task_flow:
+    - step: "request_received"
+      action: "decompose_task"
+      next: "task_created"
+      
+    - step: "task_created"
+      action: "assign_task"
+      next: "task_assigned"
+      
+    - step: "task_assigned"
+      action: "monitor_progress"
+      next: "in_progress"
+      
+    - step: "in_progress"
+      action: "check_completion"
+      next: "completed"
+      
+    - step: "completed"
+      action: "quality_check"
+      next: "done"
+
+  # 問題解決フロー
+  issue_resolution:
+    - step: "issue_detected"
+      action: "analyze_issue"
+      next: "escalate_or_resolve"
+      
+    - step: "escalate_or_resolve"
+      action: "escalate_issue"
+      next: "awaiting_resolution"
+
+monitoring:
+  alerts:
+    # アラート設定
+    inactive_agent:
+      threshold: 300  # 5分
+      severity: "warning"
+      
+    stale_task:
+      threshold: 1800  # 30分
+      severity: "critical"
+      
+    task_overload:
+      threshold: 5  # 同時に5タスク以上
+      severity: "warning"
+
+  metrics:
+    # 監視メトリクス
+    - name: "task_completion_rate"
+      description: "タスク完了率"
+      
+    - name: "average_response_time"
+      description: "平均応答時間"
+      
+    - name: "agent_efficiency"
+      description: "エージェント効率性"
+
+notifications:
+  channels:
+    console: true
+    file: true
+    webhook: false
+    
+  levels:
+    debug: false
+    info: true
+    warning: true
+    error: true
+    critical: true
