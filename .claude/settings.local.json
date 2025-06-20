@@ -29,7 +29,14 @@
       "Bash(find:*)",
       "Bash(npm test)",
       "Bash(npm test:*)",
-      "Bash(npm run test:coverage:*)"
+      "Bash(npm run test:coverage:*)",
+      "Bash(tmux capture-pane:*)",
+      "Bash(claude-agents send:*)",
+      "Bash(claude-agents send tech_lead \"進捗確認。既存テストのタイムアウト問題が深刻です（2分でタイムアウト）。Scenario LoaderとTmux Checkerの修正を最優先で完了してください。修正完了次第すぐに報告を。\")",
+      "Bash(claude-agents status)",
+      "Bash(cat:*)",
+      "Bash(claude-agents list)",
+      "Bash(tmux display-message:*)"
     ],
     "deny": []
   }

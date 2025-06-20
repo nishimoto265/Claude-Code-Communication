@@ -98,6 +98,23 @@ Claude Codeが本プロジェクトで蓄積した知識と改善提案を体系
 
 ## 📚 詳細ドキュメント
 
+### .claude/ ディレクトリ構成
+
+```
+.claude/
+├── architecture.md           # システムアーキテクチャ
+├── commands.md              # コマンドリファレンス
+├── communication.md         # 通信システム詳細
+├── custom-scenarios.md      # カスタムシナリオ作成
+├── development.md           # 開発者ガイド
+├── improvements.md          # 改善提案
+├── knowledge.md             # 学習内容・知見
+├── migration.md             # 開発履歴・移行ガイド
+├── scenarios.md             # シナリオ管理
+├── settings.local.json      # Claude Code権限設定
+└── troubleshooting.md       # トラブルシューティング
+```
+
 ### アーキテクチャと実装
 - **[システムアーキテクチャ](.claude/architecture.md)**: NPMパッケージ構造、設定管理、エラーハンドリング
 - **[通信システム詳細](.claude/communication.md)**: tmux通信の実装詳細、エスケープ処理、ログ管理
@@ -110,9 +127,14 @@ Claude Codeが本プロジェクトで蓄積した知識と改善提案を体系
 - **[シナリオ管理](.claude/scenarios.md)**: 利用可能シナリオの詳細、実行手順、tmuxセッション構成
 - **[カスタムシナリオ作成](.claude/custom-scenarios.md)**: 独自シナリオの作成方法、業界別サンプル
 
-### トラブルシューティング
+### トラブルシューティング・管理
 - **[トラブルシューティング](.claude/troubleshooting.md)**: 一般的な問題と解決方法、デバッグ手順
 - **[開発履歴・移行](.claude/migration.md)**: プロジェクト履歴、v1.xからv2.0への移行ガイド
+
+### Claude Code設定・権限管理
+- **[権限設定](.claude/settings.local.json)**: Claude Code権限管理ファイル
+  - tmux操作、claude-agents、npm testなど40個のコマンド許可設定
+  - プロジェクト固有の権限制御で安全性を確保
 
 ## 重要な技術ポイント
 
