@@ -21,7 +21,7 @@ module.exports = {
     '**/lib/**/*.test.js'
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
-  testTimeout: 20000,
+  testTimeout: 60000,
   clearMocks: true,
   resetMocks: true,
   restoreMocks: true

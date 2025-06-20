@@ -10,12 +10,18 @@ const agentManager = require('../../lib/core/agent-manager');
 describe('Agent Manager', () => {
   let originalCwd;
   
-  beforeEach(() => {
+  beforeEach(async () => {
     originalCwd = process.cwd();
     process.chdir(global.testUtils.TEST_DIR);
+    // tmpディレクトリを確実に作成
+    await fs.ensureDir('./tmp');
   });
   
-  afterEach(() => {
+  afterEach(async () => {
+    // tmpディレクトリをクリーンアップ
+    if (await fs.pathExists('./tmp')) {
+      await fs.remove('./tmp');
+    }
     process.chdir(originalCwd);
   });
 
@@ -109,6 +115,9 @@ export -f get_agent_target 2>/dev/null || true
 
     test('tmpディレクトリが存在しない場合は作成される', async () => {
       const mapping = { agent1: 'session:1.1' };
+      
+      // tmpディレクトリを一時削除
+      await fs.remove('./tmp');
       
       await agentManager.saveAgentMapping(mapping);
       

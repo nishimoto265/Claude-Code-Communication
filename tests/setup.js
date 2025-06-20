@@ -7,8 +7,12 @@ const path = require('path');
 
 // モックテスト用のディレクトリ
 const TEST_DIR = path.join(__dirname, 'temp');
+let originalCwd;
 
 beforeEach(async () => {
+  // 元の作業ディレクトリを保存
+  originalCwd = process.cwd();
+  
   // テスト用一時ディレクトリを作成
   try {
     await fs.remove(TEST_DIR);
@@ -21,9 +25,17 @@ beforeEach(async () => {
   await fs.ensureDir(path.join(TEST_DIR, 'tmp'));
   await fs.ensureDir(path.join(TEST_DIR, 'logs'));
   await fs.ensureDir(path.join(TEST_DIR, 'scenarios'));
+  
+  // 作業ディレクトリをテスト用に変更
+  process.chdir(TEST_DIR);
 });
 
 afterEach(async () => {
+  // 作業ディレクトリを元に戻す
+  if (originalCwd) {
+    process.chdir(originalCwd);
+  }
+  
   // テスト後のクリーンアップ
   try {
     await fs.remove(TEST_DIR);

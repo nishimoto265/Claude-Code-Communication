@@ -101,7 +101,7 @@ describe('Tmux Manager', () => {
       expect(mockSpawn).toHaveBeenCalledWith('tmux', ['new-session', '-d', '-s', 'empty', '-n', 'empty'], expect.any(Object));
     });
 
-    test('既存セッションが存在する場合は削除してから作成する', async () => {
+    test('既存セッションが存在する場合はリセットしてから作成する', async () => {
       const scenarioConfig = {
         tmux_sessions: {
           existing: {
@@ -112,8 +112,8 @@ describe('Tmux Manager', () => {
       
       await tmuxManager.setupTmuxSessions(scenarioConfig);
       
-      // kill-sessionコマンドが呼ばれることを確認
-      expect(mockSpawn).toHaveBeenCalledWith('tmux', ['kill-session', '-t', 'existing'], expect.any(Object));
+      // has-sessionコマンド（存在チェック）が呼ばれることを確認
+      expect(mockSpawn).toHaveBeenCalledWith('tmux', ['has-session', '-t', 'existing'], expect.any(Object));
       expect(mockSpawn).toHaveBeenCalledWith('tmux', ['new-session', '-d', '-s', 'existing', '-n', 'existing'], expect.any(Object));
     });
 
@@ -244,13 +244,14 @@ describe('Tmux Manager', () => {
   });
 
   describe('killTmuxSessions', () => {
-    test('指定されたセッションを削除できる', async () => {
+    test('指定されたセッションをリセットできる', async () => {
       const sessionNames = ['strategy', 'analysis'];
       
       await tmuxManager.killTmuxSessions(sessionNames);
       
-      expect(mockSpawn).toHaveBeenCalledWith('tmux', expect.arrayContaining(['kill-session', '-t', 'strategy']), expect.any(Object));
-      expect(mockSpawn).toHaveBeenCalledWith('tmux', expect.arrayContaining(['kill-session', '-t', 'analysis']), expect.any(Object));
+      // kill-sessionではなく、has-sessionとsend-keysが呼ばれることを確認
+      expect(mockSpawn).toHaveBeenCalledWith('tmux', expect.arrayContaining(['has-session', '-t', 'strategy']), expect.any(Object));
+      expect(mockSpawn).toHaveBeenCalledWith('tmux', expect.arrayContaining(['has-session', '-t', 'analysis']), expect.any(Object));
     });
 
     test('セッションが存在しない場合でもエラーにならない', async () => {

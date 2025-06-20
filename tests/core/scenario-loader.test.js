@@ -11,9 +11,11 @@ const scenarioLoader = require('../../lib/core/scenario-loader');
 describe('Scenario Loader', () => {
   let originalCwd;
   
-  beforeEach(() => {
+  beforeEach(async () => {
     originalCwd = process.cwd();
     process.chdir(global.testUtils.TEST_DIR);
+    // scenariosディレクトリを確実に作成
+    await fs.ensureDir(path.join(global.testUtils.TEST_DIR, 'scenarios'));
   });
   
   afterEach(() => {
