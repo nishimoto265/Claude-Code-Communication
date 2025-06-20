@@ -1,6 +1,6 @@
 version: 2.0.0
-currentScenario: collaborative-coding
-projectName: CC-ProductManagement
+currentScenario: hello-world
+projectName: Claude-Code-Agent
 scenarios:
   hello-world:
     name: Hello World Demo
@@ -207,5 +207,11 @@ settings:
   autoStartClaude: true
   logLevel: info
   colorOutput: true
+  security:
+    allowTmuxKillSession: false
+    restrictedCommands:
+      - tmux kill-session
+      - tmux kill-server
+    confirmationRequired: true
 createdAt: '2025-06-18T05:58:16.924Z'
-lastUpdated: '2025-06-19T01:21:09.760Z'
+lastUpdated: '2025-06-19T11:07:07.538Z'
