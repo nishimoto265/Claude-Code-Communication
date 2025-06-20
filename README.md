@@ -1078,3 +1078,15 @@ claude-agents init --scenario business-strategy
 claude-agents start
 ```
 
+=======
+## 📄 ライセンス
+
+このプロジェクトは[MIT License](LICENSE)の下で公開されています。
+
+## 🤝 コントリビューション
+
+プルリクエストやIssueでのコントリビューションを歓迎いたします！
+
+---
+
+🚀 **Agent Communication を体感してください！** 🤖✨ 
